@@ -56,3 +56,4 @@ dkms.conf
 *.vim
 *.swp
 .vscode
+scop
