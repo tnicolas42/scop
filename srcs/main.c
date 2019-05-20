@@ -12,6 +12,20 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
+void draw()
+{
+	glBegin(GL_QUADS);
+
+	glColor3ub(0,0,255);
+	glVertex2d(-0.75,-0.75);
+	glVertex2d(-0.75,0.75);
+	glColor3ub(255,0,0);
+	glVertex2d(0.75,0.75);
+	glVertex2d(0.75,-0.75);
+
+	glEnd();
+}
+
 int main(int ac, char **av)
 {
 	if (!glfwInit())
@@ -46,14 +60,7 @@ int main(int ac, char **av)
         ratio = width / (float) height;
 
 		glClear(GL_COLOR_BUFFER_BIT);
-        glBegin(GL_QUADS);
-            glColor3ub(0,0,255);
-            glVertex2d(-0.75,-0.75);
-            glVertex2d(-0.75,0.75);
-            glColor3ub(255,0,0);
-            glVertex2d(0.75,0.75);
-            glVertex2d(0.75,-0.75);
-        glEnd();
+        draw();
         glFlush();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
