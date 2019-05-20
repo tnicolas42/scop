@@ -17,11 +17,15 @@ FILES = main.c
 
 HFILES = libft/includes/libft.h \
 		 includes/scop.h \
-		 glfw-3.3/include/GLFW/glfw3.h
+		 lib/glfw_src/include/GLFW/glfw3.h
 
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
 LIBFT_LIB = -L $(LIBFT_DIR) -lft
+
+LIBS_DIR = lib/
+LIBS_LIB = -L $(LIBS_DIR)/glfw/src -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+
 
 CC = gcc
 CFLAGS = -Wall # -Wextra -Werror
@@ -31,7 +35,7 @@ SRCS_DIR = srcs/
 
 INC_DIR =	includes/ \
 			$(LIBFT_DIR)includes/ \
-			glfw-3.3/include/
+			lib/glfw_src/include/
 
 INC := $(addprefix -I , $(INC_DIR))
 SRCS := $(addprefix $(SRCS_DIR), $(FILES))
@@ -54,15 +58,15 @@ START = @printf $(GREEN)$(BOLD)"$(PROJECT_NAME)\n--------------------\n"$(NORMAL
 END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)
 
 all:
+	@make -C $(LIBS_DIR)
 	@make -C $(LIBFT_DIR)
-	@printf "objs: $(OBJS).\nsrcs: $(SRCS).\nincl: $(INC).\n"
 	$(START)
 	@make $(NAME)
 	$(END)
 
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
 	@printf $(CYAN)"-> create program : $(NAME)\n"$(NORMAL)
-	@$(CC) -o $(NAME) $(OBJS) $(OBJS_COM) $(INC) $(CFLAGS) $(LIBFT_LIB) -L glfw-3.3/src -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
+	@$(CC) -o $(NAME) $(OBJS) $(OBJS_COM) $(INC) $(CFLAGS) $(LIBFT_LIB) $(LIBS_LIB)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(HFILES)
 	@printf $(YELLOW)"-> $<\n"$(NORMAL)
@@ -72,6 +76,7 @@ $(OBJS_DIR):
 	@mkdir -p $(dir $(OBJS))
 
 clean:
+	@make -C $(LIBS_DIR) clean
 	@make -C $(LIBFT_DIR) clean
 	$(START)
 	@printf $(RED)"-x remove .o files\n"$(NORMAL)
@@ -79,6 +84,7 @@ clean:
 	$(END)
 
 fclean: clean
+	@make -C $(LIBS_DIR) cleanlib
 	@make -C $(LIBFT_DIR) cleanlib
 	$(START)
 	@printf $(RED)"-x remove $(NAME)\n"$(NORMAL)
@@ -95,4 +101,4 @@ exec:
 	@./$(NAME)
 	@printf $(MAGENTA)$(BOLD)"--------------------\n"$(NORMAL)
 
-.PHONY: all clean fclean exec
+.PHONY: all clean fclean re exec

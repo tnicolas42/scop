@@ -57,3 +57,4 @@ dkms.conf
 *.swp
 .vscode
 scop
+lib/glfw
