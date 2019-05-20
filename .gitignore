@@ -53,5 +53,6 @@ dkms.conf
 
 # other
 .DS_Store
-.vim
-.swp
+*.vim
+*.swp
+.vscode
