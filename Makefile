@@ -16,7 +16,8 @@ PROJECT_NAME = $(shell echo $(NAME) | tr a-z A-Z)  # name in MAJUSCULE
 FILES = main.c
 
 HFILES = libft/includes/libft.h \
-		 includes/scop.h
+		 includes/scop.h \
+		 glfw-3.3/include/GLFW/glfw3.h
 
 LIBFT_DIR = libft/
 LIBFT = $(LIBFT_DIR)libft.a
@@ -29,7 +30,8 @@ OBJS_DIR = objs/
 SRCS_DIR = srcs/
 
 INC_DIR =	includes/ \
-			$(LIBFT_DIR)includes/
+			$(LIBFT_DIR)includes/ \
+			glfw-3.3/include/
 
 INC := $(addprefix -I , $(INC_DIR))
 SRCS := $(addprefix $(SRCS_DIR), $(FILES))
@@ -53,13 +55,14 @@ END = @printf $(GREEN)$(BOLD)"--------------------\n"$(NORMAL)
 
 all:
 	@make -C $(LIBFT_DIR)
+	@printf "objs: $(OBJS).\nsrcs: $(SRCS).\nincl: $(INC).\n"
 	$(START)
 	@make $(NAME)
 	$(END)
 
 $(NAME): $(OBJS_DIR) $(OBJS) $(LIBFT)
 	@printf $(CYAN)"-> create program : $(NAME)\n"$(NORMAL)
-	@$(CC) -o $(NAME) $(OBJS) $(OBJS_COM) $(INC) $(CFLAGS) $(LIBFT_LIB)
+	@$(CC) -o $(NAME) $(OBJS) $(OBJS_COM) $(INC) $(CFLAGS) $(LIBFT_LIB) -L glfw-3.3/src -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(HFILES)
 	@printf $(YELLOW)"-> $<\n"$(NORMAL)
