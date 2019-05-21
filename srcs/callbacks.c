@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:34:44 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/21 15:36:19 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/21 16:27:41 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ void	scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 		g_a->transform.scale.z += zoom_add;
 }
 
-void	key_callback(GLFWwindow *window, int key, int scancode, int action,
-			int mods)
+void	key_callback(GLFWwindow *window, int key, int scancode, int action)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -85,14 +84,6 @@ void	key_callback(GLFWwindow *window, int key, int scancode, int action,
 		g_a->key_mouse.is_ctrl_pressed = true;
 	else
 		g_a->key_mouse.is_ctrl_pressed = false;
-	if (key == GLFW_KEY_D && (action == GLFW_REPEAT || action == GLFW_PRESS))
-		g_a->transform.position.x += MOVING_SPEED_KEY;
-	if (key == GLFW_KEY_A && (action == GLFW_REPEAT || action == GLFW_PRESS))
-		g_a->transform.position.x -= MOVING_SPEED_KEY;
-	if (key == GLFW_KEY_W && (action == GLFW_REPEAT || action == GLFW_PRESS))
-		g_a->transform.position.y += MOVING_SPEED_KEY;
-	if (key == GLFW_KEY_S && (action == GLFW_REPEAT || action == GLFW_PRESS))
-		g_a->transform.position.y -= MOVING_SPEED_KEY;
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 		reset_transform();
 }

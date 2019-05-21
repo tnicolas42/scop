@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
+/*   Updated: 2019/05/21 16:28:32 by tnicolas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <scop.h>
 
-void    reset_transform(void)
+void		reset_transform(void)
 {
-    g_a->transform.position.x = 0;
+	g_a->transform.position.x = 0;
 	g_a->transform.position.y = 0;
 	g_a->transform.position.z = 0;
 	g_a->transform.rotation.x = 0;
@@ -13,18 +25,16 @@ void    reset_transform(void)
 	g_a->transform.scale.z = 1;
 }
 
-static int init_a(void)
+static int	init_a(void)
 {
-    if (g_a == NULL)
-        if (!(g_a = malloc(sizeof(t_a))))
-            return (ERROR);
-
+	if (g_a == NULL)
+		if (!(g_a = malloc(sizeof(t_a))))
+			return (ERROR);
 	g_a->key_mouse.is_ctrl_pressed = false;
 	g_a->key_mouse.is_mouse_left_pressed = false;
 	g_a->key_mouse.is_mouse_right_pressed = false;
 	g_a->key_mouse.mouse_x = -1;
 	g_a->key_mouse.mouse_y = -1;
-
 	g_a->cam.position.x = 0;
 	g_a->cam.position.y = -5;
 	g_a->cam.position.z = 0;
@@ -34,15 +44,13 @@ static int init_a(void)
 	g_a->cam.vert_vector.x = 0;
 	g_a->cam.vert_vector.y = 0;
 	g_a->cam.vert_vector.z = 1;
-
 	reset_transform();
-    return (SUCCESS);
+	return (SUCCESS);
 }
 
-void init(void)
+void		init(void)
 {
-    init_a();
-
+	init_a();
 	if (!glfwInit())
 	{
 		ft_putstr("Error when loading GLFW\n");
@@ -56,18 +64,18 @@ void init(void)
 		exit(1);
 	}
 	glfwMakeContextCurrent(g_a->window);
-	glfwSetKeyCallback(g_a->window, key_callback);
+	glfwSetKeyCallback(g_a->window, (void(*)(GLFWwindow *, int, int, int, int))
+		(size_t)&key_callback);
 	glfwSetScrollCallback(g_a->window, scroll_callback);
 	glfwSetMouseButtonCallback(g_a->window, mouse_button_callback);
 	glfwSetCursorPosCallback(g_a->window, cursor_position_callback);
-
 	glfwSwapInterval(1);
 	glEnable(GL_DEPTH_TEST);
 }
 
-void quit()
+void		quit(void)
 {
 	glfwDestroyWindow(g_a->window);
 	glfwTerminate();
-    free(g_a);
+	free(g_a);
 }
