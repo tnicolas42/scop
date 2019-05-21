@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tnicolas <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2018/02/01 00:14:19 by tnicolas         ###   ########.fr        #
+#    Updated: 2019/05/21 16:08:20 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ FILES = main.c \
 
 HFILES = libft/includes/libft.h \
 		 includes/scop.h \
+		 includes/scop_struct.h \
 		 lib/glfw_src/include/GLFW/glfw3.h
 
 LIBFT_DIR = libft/
@@ -40,7 +41,7 @@ SRCS_DIR = srcs/
 
 INC_DIR =	includes/ \
 			$(LIBFT_DIR)includes/ \
-			lib/glfw_src/include/
+			lib/glfw_src/include/ \
 
 INC := $(addprefix -I , $(INC_DIR))
 SRCS := $(addprefix $(SRCS_DIR), $(FILES))

@@ -1,6 +1,6 @@
 #include <scop.h>
 
-t_a		a;
+t_a		*g_a = NULL;
 
 int main(int ac, char **av)
 {

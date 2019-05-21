@@ -2,14 +2,14 @@
 
 void    loop(void)
 {
-	while (!glfwWindowShouldClose(a.window))
+	while (!glfwWindowShouldClose(g_a->window))
 	{
 		float ratio;
         int width, height;
 
 		glLoadIdentity( );
 
-        glfwGetFramebufferSize(a.window, &width, &height);
+        glfwGetFramebufferSize(g_a->window, &width, &height);
 		glViewport(0, 0, width, height);
         ratio = width / (float) height;
 		glMatrixMode(GL_PROJECTION);
@@ -21,7 +21,7 @@ void    loop(void)
         draw();
 
         glFlush();
-		glfwSwapBuffers(a.window);
+		glfwSwapBuffers(g_a->window);
 		glfwPollEvents();
 		usleep(10 * 1000);
 	}
