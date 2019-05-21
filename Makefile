@@ -13,7 +13,12 @@
 NAME = scop
 PROJECT_NAME = $(shell echo $(NAME) | tr a-z A-Z)  # name in MAJUSCULE
 
-FILES = main.c
+FILES = main.c \
+		init.c \
+		callbacks.c \
+		transform.c \
+		draw.c \
+		loop.c
 
 HFILES = libft/includes/libft.h \
 		 includes/scop.h \
@@ -28,7 +33,7 @@ LIBS_LIB = -L $(LIBS_DIR)/glfw/src -lglfw3 -framework Cocoa -framework OpenGL -f
 
 
 CC = gcc
-CFLAGS = -Wall # -Wextra -Werror
+CFLAGS = -Wall -Wno-deprecated # -Wextra -Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/
