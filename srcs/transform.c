@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:24:30 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 13:46:47 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 19:42:14 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,31 @@ void	move_object(double delta_x, double delta_y)
 		g_a->transform.rotation.x += -delta_y * ROTATE_SPEED_MOUSE;
 		g_a->transform.rotation.z += -delta_x * ROTATE_SPEED_MOUSE;
 	}
+}
+
+void	zoom_object(double offset)
+{
+	double zoom_add;
+
+	zoom_add = offset * g_a->transform.scale.x;
+	if (g_a->transform.scale.x + zoom_add < ZOOM_MIN)
+		g_a->transform.scale.x = ZOOM_MIN;
+	else if (g_a->transform.scale.x + zoom_add > ZOOM_MAX)
+		g_a->transform.scale.x = ZOOM_MAX;
+	else
+		g_a->transform.scale.x += zoom_add;
+	if (g_a->transform.scale.y + zoom_add < ZOOM_MIN)
+		g_a->transform.scale.y = ZOOM_MIN;
+	else if (g_a->transform.scale.y + zoom_add > ZOOM_MAX)
+		g_a->transform.scale.y = ZOOM_MAX;
+	else
+		g_a->transform.scale.y += zoom_add;
+	if (g_a->transform.scale.z + zoom_add < ZOOM_MIN)
+		g_a->transform.scale.z = ZOOM_MIN;
+	else if (g_a->transform.scale.z + zoom_add > ZOOM_MAX)
+		g_a->transform.scale.z = ZOOM_MAX;
+	else
+		g_a->transform.scale.z += zoom_add;
 }
 
 void	transform(void)

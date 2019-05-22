@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 17:25:35 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 19:48:35 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define MOVING_SPEED_KEYBOARD 0.1
 # define ROTATE_SPEED_MOUSE 0.2
 # define ROTATE_SPEED_KEYBOARD 10
-# define ZOOM_SPEED 0.02
+# define ZOOM_SPEED_MOUSE 0.02
+# define ZOOM_SPEED_KEYBOARD 0.15
 # define ZOOM_MIN 0.1
 # define ZOOM_MAX 15
 
@@ -66,6 +67,7 @@ void			key_callback(GLFWwindow *window, int key, int scancode,
 
 void			loop(void);
 void			move_object(double delta_x, double delta_y);
+void			zoom_object(double offset);
 void			transform(void);
 void			set_camera(float ratio);
 void			draw(void);

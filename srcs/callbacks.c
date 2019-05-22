@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:34:44 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 19:38:36 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 19:52:52 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,9 @@ void	mouse_button_callback(GLFWwindow *window, int button, int action,
 
 void	scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
-	double zoom_add;
-
 	(void)window;
 	(void)xoffset;
-	zoom_add = yoffset * ZOOM_SPEED * g_a->transform.scale.x;
-	if (g_a->transform.scale.x + zoom_add < ZOOM_MIN)
-		g_a->transform.scale.x = ZOOM_MIN;
-	else if (g_a->transform.scale.x + zoom_add > ZOOM_MAX)
-		g_a->transform.scale.x = ZOOM_MAX;
-	else
-		g_a->transform.scale.x += zoom_add;
-	if (g_a->transform.scale.y + zoom_add < ZOOM_MIN)
-		g_a->transform.scale.y = ZOOM_MIN;
-	else if (g_a->transform.scale.y + zoom_add > ZOOM_MAX)
-		g_a->transform.scale.y = ZOOM_MAX;
-	else
-		g_a->transform.scale.y += zoom_add;
-	if (g_a->transform.scale.z + zoom_add < ZOOM_MIN)
-		g_a->transform.scale.z = ZOOM_MIN;
-	else if (g_a->transform.scale.z + zoom_add > ZOOM_MAX)
-		g_a->transform.scale.z = ZOOM_MAX;
-	else
-		g_a->transform.scale.z += zoom_add;
+	zoom_object(yoffset * ZOOM_SPEED_MOUSE);
 }
 
 void	key_callback(GLFWwindow *window, int key, int scancode, int action)
@@ -129,4 +109,16 @@ void	key_callback(GLFWwindow *window, int key, int scancode, int action)
 		g_a->draw_verticles = !g_a->draw_verticles;
 	if (key == GLFW_KEY_2 && action == GLFW_PRESS)
 		g_a->draw_faces = !g_a->draw_faces;
+	if ((key == GLFW_KEY_MINUS || key == GLFW_KEY_KP_SUBTRACT) && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		zoom_object(-ZOOM_SPEED_KEYBOARD);
+	if ((key == GLFW_KEY_EQUAL || key == GLFW_KEY_KP_ADD) && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		zoom_object(ZOOM_SPEED_KEYBOARD);
+	if ((key == GLFW_KEY_UP || key == GLFW_KEY_W) && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		g_a->transform.position.z += MOVING_SPEED_KEYBOARD * g_a->object.description.max_size;
+	if ((key == GLFW_KEY_DOWN || key == GLFW_KEY_S) && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		g_a->transform.position.z -= MOVING_SPEED_KEYBOARD * g_a->object.description.max_size;
+	if ((key == GLFW_KEY_LEFT || key == GLFW_KEY_A) && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		g_a->transform.position.x -= MOVING_SPEED_KEYBOARD * g_a->object.description.max_size;
+	if ((key == GLFW_KEY_RIGHT || key == GLFW_KEY_D) && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		g_a->transform.position.x += MOVING_SPEED_KEYBOARD * g_a->object.description.max_size;
 }
