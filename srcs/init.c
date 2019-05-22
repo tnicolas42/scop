@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 16:00:43 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 17:12:45 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static void	init_a(void)
 	g_a->key_mouse.is_mouse_right_pressed = false;
 	g_a->key_mouse.mouse_x = -1;
 	g_a->key_mouse.mouse_y = -1;
+	g_a->draw_verticles = DRAW_VERTICLES;
+	g_a->draw_faces = DRAW_FACES;
 	init_object();
 	set_camera_pos();
 	reset_transform(&(g_a->transform));

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:34:44 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 16:03:16 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 17:14:19 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,8 @@ void	key_callback(GLFWwindow *window, int key, int scancode, int action)
 		else
 			g_a->transform.position.z += MOVING_SPEED_KEYBOARD * g_a->object.description.max_size * revert;
 	}
+	if (key == GLFW_KEY_1 && action == GLFW_PRESS)
+		g_a->draw_verticles = !g_a->draw_verticles;
+	if (key == GLFW_KEY_2 && action == GLFW_PRESS)
+		g_a->draw_faces = !g_a->draw_faces;
 }

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 16:00:29 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 17:12:16 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ typedef struct		s_a
 	t_object		object;
 	GLFWwindow		*window;
 	t_key_mouse		key_mouse;
+	bool			draw_verticles;
+	bool			draw_faces;
 }					t_a;
 
 /*

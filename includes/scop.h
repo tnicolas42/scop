@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 15:59:36 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 17:15:40 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@
 # define ERROR 0
 
 # define NB_TYPE_OBJ_FILE 11
+
+# define DRAW_VERTICLES false
+# define DRAW_FACES true
 
 extern t_a		*g_a;
 

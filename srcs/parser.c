@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:47:35 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 15:46:44 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 17:22:43 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static void	set_sizes()
 	g_a->object.description.size.x = g_a->object.description.max.x - g_a->object.description.min.x;
 	g_a->object.description.size.y = g_a->object.description.max.y - g_a->object.description.min.y;
 	g_a->object.description.size.z = g_a->object.description.max.z - g_a->object.description.min.z;
-	g_a->object.description.center.x = (g_a->object.description.max.x - g_a->object.description.min.x) / 2;
-	g_a->object.description.center.y = (g_a->object.description.max.y - g_a->object.description.min.y) / 2;
-	g_a->object.description.center.z = (g_a->object.description.max.z - g_a->object.description.min.z) / 2;
+	g_a->object.description.center.x = (g_a->object.description.max.x + g_a->object.description.min.x) / 2;
+	g_a->object.description.center.y = (g_a->object.description.max.y + g_a->object.description.min.y) / 2;
+	g_a->object.description.center.z = (g_a->object.description.max.z + g_a->object.description.min.z) / 2;
 	max_size = g_a->object.description.size.x;
 	max_size = (g_a->object.description.size.y > max_size) ? g_a->object.description.size.y : max_size;
 	max_size = (g_a->object.description.size.z > max_size) ? g_a->object.description.size.z : max_size;
