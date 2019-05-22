@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 19:48:35 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 20:24:30 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			quit(void);
 int				obj_not_implemented(t_obj obj_info, char **args, int line_nb);
 int				obj_comment(t_obj obj_info, char **args, int line_nb);
 int				obj_verticle(t_obj obj_info, char **args, int line_nb);
+int				obj_texture(t_obj obj_info, char **args, int line_nb);
 int				obj_faces(t_obj obj_info, char **args, int line_nb);
 void			parse(char *filename);
 

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:49:57 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 15:49:36 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 20:40:00 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,47 @@ int		obj_verticle(t_obj obj_info, char **args, int line_nb)
 		new->v.id = 1;
 	new->next = g_a->object.objects->groups->verticles;
 	g_a->object.objects->groups->verticles = new;
+	return (SUCCESS);
+}
+
+int		obj_texture(t_obj obj_info, char **args, int line_nb)
+{
+	t_obj_texture_lst	*new;
+	float				nb;
+	int					i;
+
+	if (!(new = malloc(sizeof(t_obj_texture_lst))))
+		exit(EXIT_FAILURE);
+	i = 1;
+	while (i < 3)
+	{
+		if (args[i] == 0)
+		{
+			ft_printf("line %d: %s (%s) not enouth arguments (need 2 arguments)\n",
+				line_nb, obj_info.name, obj_info.description);
+			free(new);
+			return (ERROR);
+		}
+		nb = atof(args[i]);
+		if (i == 1)
+			new->t.position.x = nb;
+		else if (i == 2)
+			new->t.position.y = nb;
+		i++;
+	}
+	if (args[i] != 0)
+	{
+		ft_printf("line %d: %s (%s) too many arguments (need 2 arguments)\n",
+			line_nb, obj_info.name, obj_info.description);
+		free(new);
+		return (ERROR);
+	}
+	if (g_a->object.objects->groups->textures)
+		new->t.id = g_a->object.objects->groups->textures->t.id + 1;
+	else
+		new->t.id = 1;
+	new->next = g_a->object.objects->groups->textures;
+	g_a->object.objects->groups->textures = new;
 	return (SUCCESS);
 }
 

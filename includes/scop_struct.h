@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 17:12:16 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 20:39:48 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ typedef struct		s_vector3
 	double			y;
 	double			z;
 }					t_vector3;
+
+/*
+**	simple object with information about the coordinate (x and y)
+*/
+
+typedef struct		s_vector2
+{
+	double			x;
+	double			y;
+}					t_vector2;
 
 /*
 **	general informations about the mouse and the keyboard
@@ -97,12 +107,30 @@ typedef struct		s_obj_verticle_lst
 }					t_obj_verticle_lst;
 
 /*
+**	chained list with all textures coordinates (vt ...)
+*/
+
+typedef struct		s_obj_texture
+{
+	int						id;
+	t_vector2				position;
+	struct s_obj_texture	*next;
+}					t_obj_texture;
+
+typedef struct		s_obj_texture_lst
+{
+	t_obj_texture				t;
+	struct s_obj_texture_lst	*next;
+}					t_obj_texture_lst;
+
+/*
 **	chained list with all faces (v ...)
 */
 
 typedef struct		s_obj_face
 {
 	t_obj_verticle_lst	*verticles;
+	t_obj_texture_lst	*textures;
 	struct s_obj_face	*next;
 }					t_obj_face;
 
@@ -114,6 +142,7 @@ typedef struct		s_obj_group
 {
 	char				*name;
 	t_obj_verticle_lst	*verticles;
+	t_obj_texture_lst	*textures;
 	t_obj_face			*faces;
 	struct s_obj_group	*next;
 }					t_obj_group;

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 19:33:56 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 20:08:31 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void		init(void)
 	glfwMakeContextCurrent(g_a->window);
 	glfwSwapInterval(1);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_3D);
 }
 
 static void free_g_a2(t_obj_group *group)

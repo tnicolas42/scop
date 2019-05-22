@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:47:35 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 17:22:43 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 20:24:36 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_obj		g_obj[NB_TYPE_OBJ_FILE] =
 	{"o", obj_not_implemented, "object name"},
 	{"g", obj_not_implemented, "group name"},
 	{"v", obj_verticle, "verticle"},
-	{"vt", obj_not_implemented, "texture coordinate"},
+	{"vt", obj_texture, "texture coordinate"},
 	{"vn", obj_not_implemented, "normal"},
 	{"f", obj_faces, "face"},
 	{"l", obj_not_implemented, "line element"},
