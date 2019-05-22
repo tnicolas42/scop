@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:19:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 17:14:42 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 19:36:08 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	draw_faces(t_obj_group *group)
 	while (tmp)
 	{
 		glBegin(GL_POLYGON);
-		glColor3ub(255, 255, 255);
+		glColor3ub(100, 100, 100);
 		verticle_tmp = tmp->verticles;
 		while (verticle_tmp)
 		{
@@ -67,10 +67,10 @@ void		draw(void)
 		tmp_group = tmp_obj->groups;
 		while (tmp_group)
 		{
-			if (g_a->draw_verticles == true)
-				draw_verticles(tmp_group);
 			if (g_a->draw_faces == true)
 				draw_faces(tmp_group);
+			if (g_a->draw_verticles == true)
+				draw_verticles(tmp_group);
 			tmp_group = tmp_group->next;
 		}
 		tmp_obj = tmp_obj->next;

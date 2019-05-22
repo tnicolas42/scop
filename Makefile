@@ -6,7 +6,7 @@
 #    By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2019/05/22 15:37:13 by tnicolas         ###   ########.fr        #
+#    Updated: 2019/05/22 19:23:42 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ LIBS_LIB = -L $(LIBS_DIR)/glfw/src -lglfw3 -framework Cocoa -framework OpenGL -f
 
 
 CC = gcc
-CFLAGS = -Wall -Wno-deprecated -Wextra -fsanitize=address -g3 # -Werror
+CFLAGS = -Wall -Wno-deprecated -Wextra -g3 #-fsanitize=address # -Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:34:44 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 17:14:19 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 19:38:36 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 
 	(void)window;
 	(void)xoffset;
-	zoom_add = yoffset * ZOOM_SPEED;
+	zoom_add = yoffset * ZOOM_SPEED * g_a->transform.scale.x;
 	if (g_a->transform.scale.x + zoom_add < ZOOM_MIN)
 		g_a->transform.scale.x = ZOOM_MIN;
 	else if (g_a->transform.scale.x + zoom_add > ZOOM_MAX)

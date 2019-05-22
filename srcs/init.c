@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 18:09:26 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 19:33:56 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,62 @@ void		init(void)
 	glEnable(GL_DEPTH_TEST);
 }
 
+static void free_g_a2(t_obj_group *group)
+{
+	t_obj_face			*tmp_face[2];
+	t_obj_verticle_lst	*tmp_verticle[2];
+
+	tmp_face[0] = group->faces;
+	while(tmp_face[0])
+	{
+		tmp_verticle[0] = tmp_face[0]->verticles;
+		while (tmp_verticle[0])
+		{
+			tmp_verticle[1] = tmp_verticle[0];
+			tmp_verticle[0] = tmp_verticle[0]->next;
+			free(tmp_verticle[1]);
+		}
+		tmp_face[1] = tmp_face[0];
+		tmp_face[0] = tmp_face[0]->next;
+		free(tmp_face[1]);
+	}
+	tmp_verticle[0] = group->verticles;
+	while (tmp_verticle[0])
+	{
+		tmp_verticle[1] = tmp_verticle[0];
+		tmp_verticle[0] = tmp_verticle[0]->next;
+		free(tmp_verticle[1]);
+	}
+}
+
+static void	free_g_a(void)
+{
+	t_obj_obj			*tmp_obj[2];
+	t_obj_group			*tmp_group[2];
+
+	tmp_obj[0] = g_a->object.objects;
+	while (tmp_obj[0])
+	{
+		tmp_group[0] = tmp_obj[0]->groups;
+		while (tmp_group[0])
+		{
+			free_g_a2(tmp_group[0]);
+			tmp_group[1] = tmp_group[0];
+			tmp_group[0] = tmp_group[0]->next;
+			free(tmp_group[1]->name);
+			free(tmp_group[1]);
+		}
+		tmp_obj[1] = tmp_obj[0];
+		tmp_obj[0] = tmp_obj[0]->next;
+		free(tmp_obj[1]->name);
+		free(tmp_obj[1]);
+	}
+	free(g_a);
+}
+
 void		quit(void)
 {
 	glfwDestroyWindow(g_a->window);
 	glfwTerminate();
-	free(g_a);
+	free_g_a();
 }
