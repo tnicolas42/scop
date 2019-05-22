@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 17:15:40 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 17:25:35 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define ZOOM_MIN 0.1
 # define ZOOM_MAX 15
 
-# define CAMERA_POS_Y 3
+# define CAMERA_POS_Y 2
 # define CAMERA_NEAR CAMERA_POS_Y
 # define CAMERA_FAR 50
 
