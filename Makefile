@@ -6,12 +6,14 @@
 #    By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2019/05/21 16:49:45 by tnicolas         ###   ########.fr        #
+#    Updated: 2019/05/22 15:37:13 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = scop
 PROJECT_NAME = $(shell echo $(NAME) | tr a-z A-Z)  # name in MAJUSCULE
+
+ARGS =
 
 FILES = main.c \
 		parser.c \
@@ -19,7 +21,8 @@ FILES = main.c \
 		callbacks.c \
 		transform.c \
 		draw.c \
-		loop.c
+		loop.c \
+		parse_type1.c
 
 HFILES = libft/includes/libft.h \
 		 includes/scop.h \
@@ -35,7 +38,7 @@ LIBS_LIB = -L $(LIBS_DIR)/glfw/src -lglfw3 -framework Cocoa -framework OpenGL -f
 
 
 CC = gcc
-CFLAGS = -Wall -Wno-deprecated # -Wextra -Werror
+CFLAGS = -Wall -Wno-deprecated -Wextra -fsanitize=address -g3 # -Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/
@@ -105,7 +108,7 @@ exec:
 	@clear
 	@make
 	@printf $(MAGENTA)$(BOLD)"EXEC $(PROJECT_NAME)\n--------------------\n"$(NORMAL)
-	@./$(NAME)
+	@./$(NAME) $(ARGS)
 	@printf $(MAGENTA)$(BOLD)"--------------------\n"$(NORMAL)
 
 .PHONY: all clean fclean re exec

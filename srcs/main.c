@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:23:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/21 16:50:20 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 14:09:32 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@ t_a		*g_a = NULL;
 
 int		main(int ac, char **av)
 {
+	if (ac < 2)
+	{
+		ft_printf("Usage: ./scop <file.obj>\n");
+		return (EXIT_FAILURE);
+	}
 	init();
-	parse();
+	parse(av[1]);
 	loop();
 	quit();
+	return (EXIT_SUCCESS);
 }

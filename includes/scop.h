@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/21 17:07:19 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 15:59:36 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SCOP_H
 
 # include <libft.h>
+# include <fcntl.h>
 # include <stdbool.h>
 # include <scop_struct.h>
 
@@ -21,39 +22,49 @@
 # define SC_HEIGHT 480
 
 # define MOVING_SPEED_MOUSE 0.01
+# define MOVING_SPEED_KEYBOARD 0.1
 # define ROTATE_SPEED_MOUSE 0.2
+# define ROTATE_SPEED_KEYBOARD 10
 # define ZOOM_SPEED 0.02
 # define ZOOM_MIN 0.1
 # define ZOOM_MAX 15
 
-# define CAMERA_POS_Y 5
+# define CAMERA_POS_Y 3
 # define CAMERA_NEAR CAMERA_POS_Y
 # define CAMERA_FAR 50
 
 # define SUCCESS 1
 # define ERROR 0
 
-extern t_a	*g_a;
+# define NB_TYPE_OBJ_FILE 11
 
-void		reset_transform(void);
-void		set_camera_pos(void);
-void		init(void);
-void		quit(void);
+extern t_a		*g_a;
 
-void		parse(void);
+void			reset_transform(t_transform *transform);
+void			set_camera_pos(void);
+void			init(void);
+void			quit(void);
 
-void		error_callback(int error, const char *description);
-void		cursor_position_callback(GLFWwindow *window, double xpos,
-				double ypos);
-void		mouse_button_callback(GLFWwindow *window, int button, int action,
-				int mods);
-void		scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
-void		key_callback(GLFWwindow *window, int key, int scancode, int action);
+int				obj_not_implemented(t_obj obj_info, char **args, int line_nb);
+int				obj_comment(t_obj obj_info, char **args, int line_nb);
+int				obj_verticle(t_obj obj_info, char **args, int line_nb);
+int				obj_faces(t_obj obj_info, char **args, int line_nb);
+void			parse(char *filename);
 
-void		loop(void);
-void		move_object(double delta_x, double delta_y);
-void		transform(void);
-void		set_camera(float ratio);
-void		draw(void);
+void			error_callback(int error, const char *description);
+void			cursor_position_callback(GLFWwindow *window, double xpos,
+					double ypos);
+void			mouse_button_callback(GLFWwindow *window, int button,
+					int action, int mods);
+void			scroll_callback(GLFWwindow *window, double xoffset,
+					double yoffset);
+void			key_callback(GLFWwindow *window, int key, int scancode,
+					int action);
+
+void			loop(void);
+void			move_object(double delta_x, double delta_y);
+void			transform(void);
+void			set_camera(float ratio);
+void			draw(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:24:30 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/21 17:05:09 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/22 13:46:47 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	move_object(double delta_x, double delta_y)
 {
 	if (g_a->key_mouse.is_mouse_left_pressed && !g_a->key_mouse.is_ctrl_pressed)
 	{
-		g_a->transform.position.x += -delta_x * MOVING_SPEED_MOUSE * g_a->description.max_size;
-		g_a->transform.position.z += delta_y * MOVING_SPEED_MOUSE * g_a->description.max_size;
+		g_a->transform.position.x += -delta_x * MOVING_SPEED_MOUSE * g_a->object.description.max_size;
+		g_a->transform.position.z += delta_y * MOVING_SPEED_MOUSE * g_a->object.description.max_size;
 	}
 	if ((g_a->key_mouse.is_mouse_left_pressed && g_a->key_mouse.is_ctrl_pressed)
 	|| (g_a->key_mouse.is_mouse_right_pressed))
