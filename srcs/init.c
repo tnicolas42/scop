@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 20:08:31 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/23 14:03:44 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,74 @@ static void	init_a(void)
 	reset_transform(&(g_a->transform));
 }
 
+void	read_header(char *filename, t_texture *texture)
+{
+	FILE	*file;
+
+	if ((file = fopen(filename, "r")) == NULL)
+	{
+		ft_printf("fail to open file %s\n", filename);
+		exit(EXIT_FAILURE);
+	}
+	fseek(file, 18, SEEK_SET);
+	fread(&texture->w, 4, 1, file);
+	fread(&texture->h, 4, 1, file);
+	fseek(file, 2, SEEK_CUR);
+	fread(&texture->bpp, 2, 1, file);
+	fclose(file);
+	texture->opp = texture->bpp / 8;
+	texture->sl = texture->w * texture->opp;
+	texture->w < 0 ? texture->w = -texture->w : 0;
+	texture->h < 0 ? texture->h = -texture->h : 0;
+	texture->size = texture->sl * texture->h;
+}
+
+void	get_image(t_texture *texture, char *buffer, int i)
+{
+	int	h;
+	int	j;
+	int	size;
+
+	h = 0;
+	size = texture->size * 2;
+	if (!(texture->img = malloc(sizeof(unsigned char) * size)))
+		exit(EXIT_FAILURE);
+	while (i >= 0)
+	{
+		i -= texture->sl;
+		j = 0;
+		while (j < texture->sl)
+		{
+			texture->img[h + j] = (unsigned char)buffer[i + j + 2];
+			texture->img[h + j + 1] = (unsigned char)buffer[i + j + 1];
+			texture->img[h + j + 2] = (unsigned char)buffer[i + j];
+			j += 3;
+		}
+		h += texture->sl;
+	}
+}
+
+void	load_bmp(char *filename)
+{
+	t_texture	texture;
+	int			fd;
+	int			i;
+	char		*buffer;
+
+	read_header(filename, &texture);
+	buffer = (char*)malloc(sizeof(char) * texture.size + 1);
+	if ((fd = open(filename, O_RDWR)) == -1)
+	{
+		ft_printf("fail to open file %s\n", filename);
+		exit(EXIT_FAILURE);
+	}
+	lseek(fd, 54, SEEK_SET);
+	i = read(fd, buffer, texture.size);
+	get_image(&texture, buffer, i);
+	ft_strdel((char**)&buffer);
+	close(fd);
+}
+
 void		init(void)
 {
 	init_a();
@@ -114,6 +182,7 @@ void		init(void)
 	glfwSwapInterval(1);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_3D);
+	load_bmp("textures/metal.bmp");
 }
 
 static void free_g_a2(t_obj_group *group)

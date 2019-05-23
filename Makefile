@@ -6,7 +6,7 @@
 #    By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2019/05/22 19:23:42 by tnicolas         ###   ########.fr        #
+#    Updated: 2019/05/23 12:23:24 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SRCS_DIR = srcs/
 
 INC_DIR =	includes/ \
 			$(LIBFT_DIR)includes/ \
-			lib/glfw_src/include/ \
+			lib/glfw_src/include/
 
 INC := $(addprefix -I , $(INC_DIR))
 SRCS := $(addprefix $(SRCS_DIR), $(FILES))

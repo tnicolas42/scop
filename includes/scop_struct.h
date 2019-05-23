@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 20:39:48 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/23 12:51:12 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,27 @@
 # define GL_SILENCE_DEPRECATION
 # define GLFW_INCLUDE_GLU
 # include <GLFW/glfw3.h>
+
+/*
+**	used to save textures (BMP)
+**		img -> the image data
+**		w -> the image width (in pixel)
+**		h -> the image height (in pixel)
+**		sl
+**		bpp -> bits per pixel (24)
+**		opp -> octet per pixel (3) = bpp / 8
+*/
+
+typedef struct	s_texture
+{
+	unsigned char	*img;
+	int				size;
+	int				w;
+	int				h;
+	int				sl;
+	short			bpp;
+	short			opp;
+}				t_texture;
 
 /*
 **	simple object with information about the coordinate (x, y, and z)
