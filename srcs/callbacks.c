@@ -128,4 +128,6 @@ void	key_callback(GLFWwindow *window, int key, int scancode, int action)
 		else
 			g_a->object.objects->groups->used_texture_bmp = g_a->object.objects->groups->used_texture_bmp->next;
 	}
+	if (key == GLFW_KEY_M && action == GLFW_PRESS)
+		g_a->is_auto_moving = !g_a->is_auto_moving;
 }

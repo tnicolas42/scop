@@ -27,6 +27,7 @@
 # define ROTATE_SPEED_KEYBOARD 10
 # define ZOOM_SPEED_MOUSE 0.02
 # define ZOOM_SPEED_KEYBOARD 0.15
+# define AUTO_MOVING_SPEED 0.6
 # define ZOOM_MIN 0.1
 # define ZOOM_MAX 15
 
@@ -41,6 +42,7 @@
 
 # define DRAW_VERTICLES false
 # define DRAW_FACES true
+# define AUTO_MOVING true
 
 extern t_a		*g_a;
 

@@ -40,7 +40,7 @@ int		obj_verticle(t_obj obj_info, char **args, int line_nb)
 	i = 1;
 	while (i < 4)
 	{
-		if (args[i] == 0)
+		if (args[i] == NULL)
 		{
 			ft_printf("line %d: %s (%s) not enouth arguments (need 3 arguments)\n",
 				line_nb, obj_info.name, obj_info.description);
@@ -81,25 +81,32 @@ int		obj_texture(t_obj obj_info, char **args, int line_nb)
 	if (!(new = malloc(sizeof(t_obj_texture_lst))))
 		exit(EXIT_FAILURE);
 	i = 1;
-	while (i < 3)
+	while (i < 4)
 	{
-		if (args[i] == 0)
+		if (args[i] == NULL)
 		{
-			ft_printf("line %d: %s (%s) not enouth arguments (need 2 arguments)\n",
-				line_nb, obj_info.name, obj_info.description);
-			free(new);
-			return (ERROR);
+			if (i < 3)
+			{
+				ft_printf("line %d: %s (%s) not enouth arguments (need 2 or 3 arguments)\n",
+					line_nb, obj_info.name, obj_info.description);
+				free(new);
+				return (ERROR);
+			}
+			else
+				break ;
 		}
 		nb = atof(args[i]);
 		if (i == 1)
 			new->t.position.x = nb;
 		else if (i == 2)
 			new->t.position.y = nb;
+		else if (i == 3)
+			new->t.position.z = nb;
 		i++;
 	}
 	if (args[i] != 0)
 	{
-		ft_printf("line %d: %s (%s) too many arguments (need 2 arguments)\n",
+		ft_printf("line %d: %s (%s) too many arguments (need 2 or 3 arguments)\n",
 			line_nb, obj_info.name, obj_info.description);
 		free(new);
 		return (ERROR);
@@ -124,7 +131,7 @@ int		obj_normal(t_obj obj_info, char **args, int line_nb)
 	i = 1;
 	while (i < 4)
 	{
-		if (args[i] == 0)
+		if (args[i] == NULL)
 		{
 			ft_printf("line %d: %s (%s) not enouth arguments (need 3 arguments)\n",
 				line_nb, obj_info.name, obj_info.description);

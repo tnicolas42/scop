@@ -17,6 +17,17 @@
 # define GLFW_INCLUDE_GLU
 # include <GLFW/glfw3.h>
 
+/*
+**	simple object with information about the coordinate (x, y, z and w)
+*/
+
+typedef struct		s_vector4
+{
+	double			x;
+	double			y;
+	double			z;
+	double			w;
+}					t_vector4;
 
 /*
 **	simple object with information about the coordinate (x, y, and z)
@@ -230,6 +241,7 @@ typedef struct		s_a
 	t_key_mouse		key_mouse;
 	bool			draw_verticles;
 	bool			draw_faces;
+	bool			is_auto_moving;
 }					t_a;
 
 /*

@@ -23,7 +23,7 @@ void	move_object(double delta_x, double delta_y)
 	|| (g_a->key_mouse.is_mouse_right_pressed))
 	{
 		g_a->transform.rotation.x += -delta_y * ROTATE_SPEED_MOUSE;
-		g_a->transform.rotation.z += -delta_x * ROTATE_SPEED_MOUSE;
+		g_a->transform.rotation.y += -delta_x * ROTATE_SPEED_MOUSE;
 	}
 }
 
@@ -54,6 +54,8 @@ void	zoom_object(double offset)
 
 void	transform(void)
 {
+	if (g_a->is_auto_moving)
+		g_a->transform.rotation.y += AUTO_MOVING_SPEED;
 	glTranslated(g_a->transform.position.x,
 		g_a->transform.position.y,
 		g_a->transform.position.z);

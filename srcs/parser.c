@@ -14,15 +14,15 @@
 
 t_obj		g_obj[NB_TYPE_OBJ_FILE] =
 {
-	{"#", obj_comment, "comment"},
-	{"o", obj_not_implemented, "object name"},
-	{"g", obj_not_implemented, "group name"},
 	{"v", obj_verticle, "verticle"},
 	{"vt", obj_texture, "texture coordinate"},
 	{"vn", obj_normal, "normal"},
 	{"f", obj_faces, "face"},
 	{"l", obj_not_implemented, "line element"},
 	{"s", obj_not_implemented, "smooth shading can be disabled"},
+	{"#", obj_comment, "comment"},
+	{"o", obj_not_implemented, "object name"},
+	{"g", obj_not_implemented, "group name"},
 	{"mtllib", obj_not_implemented, "external .mtl file name"},
 	{"usemtl", obj_not_implemented, "material name"}
 };
@@ -54,7 +54,7 @@ static void	parse_line(char *line, int line_nb)
 	}
 	if (i >= NB_TYPE_OBJ_FILE)
 	{
-		ft_printf("invalid command %s (line %d): %s\n", words[0], line_nb, line);
+		ft_printf("invalid command %s (line %d): '%s'\n", words[0], line_nb, line);
 		ft_free_tab(1, words);
 		exit(EXIT_FAILURE);
 	}

@@ -17,8 +17,8 @@ void		reset_transform(t_transform *transform)
 	transform->position.x = 0;
 	transform->position.y = 0;
 	transform->position.z = 0;
-	transform->rotation.x = 0;
-	transform->rotation.y = 0;
+	transform->rotation.x = 90;
+	transform->rotation.y = -90;
 	transform->rotation.z = 0;
 	transform->scale.x = 1;
 	transform->scale.y = 1;
@@ -85,6 +85,7 @@ static void	init_a(void)
 	g_a->key_mouse.mouse_y = -1;
 	g_a->draw_verticles = DRAW_VERTICLES;
 	g_a->draw_faces = DRAW_FACES;
+	g_a->is_auto_moving = AUTO_MOVING;
 	init_object();
 	set_camera_pos();
 	reset_transform(&(g_a->transform));
