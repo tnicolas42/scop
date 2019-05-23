@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:47:35 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 20:24:36 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:29:34 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_obj		g_obj[NB_TYPE_OBJ_FILE] =
 	{"g", obj_not_implemented, "group name"},
 	{"v", obj_verticle, "verticle"},
 	{"vt", obj_texture, "texture coordinate"},
-	{"vn", obj_not_implemented, "normal"},
+	{"vn", obj_normal, "normal"},
 	{"f", obj_faces, "face"},
 	{"l", obj_not_implemented, "line element"},
 	{"s", obj_not_implemented, "smooth shading can be disabled"},
@@ -31,7 +31,6 @@ static void	parse_line(char *line, int line_nb)
 {
 	char	**words;
 	int		i;
-
 	i = 0;
 	while (line[i])
 	{

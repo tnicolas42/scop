@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 14:03:44 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/23 17:34:43 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ static void	init_object(void)
 	g_a->object.objects->groups->name = NULL;
 	g_a->object.objects->groups->next = NULL;
 	g_a->object.objects->groups->verticles = NULL;
+	g_a->object.objects->groups->textures = NULL;
+	g_a->object.objects->groups->normales = NULL;
+	g_a->object.objects->groups->textures_bmp = NULL;
+	g_a->object.objects->groups->used_texture_bmp = NULL;
 	g_a->object.objects->groups->faces = NULL;
 }
 
@@ -86,7 +90,7 @@ static void	init_a(void)
 	reset_transform(&(g_a->transform));
 }
 
-void	read_header(char *filename, t_texture *texture)
+static void	create_bmp_header(char *filename, t_bmp_texture_lst *texture)
 {
 	FILE	*file;
 
@@ -96,62 +100,76 @@ void	read_header(char *filename, t_texture *texture)
 		exit(EXIT_FAILURE);
 	}
 	fseek(file, 18, SEEK_SET);
-	fread(&texture->w, 4, 1, file);
-	fread(&texture->h, 4, 1, file);
+	fread(&texture->t.w, 4, 1, file);
+	fread(&texture->t.h, 4, 1, file);
 	fseek(file, 2, SEEK_CUR);
-	fread(&texture->bpp, 2, 1, file);
+	fread(&texture->t.bpp, 2, 1, file);
 	fclose(file);
-	texture->opp = texture->bpp / 8;
-	texture->sl = texture->w * texture->opp;
-	texture->w < 0 ? texture->w = -texture->w : 0;
-	texture->h < 0 ? texture->h = -texture->h : 0;
-	texture->size = texture->sl * texture->h;
+	texture->t.opp = texture->t.bpp >> 3;
+	texture->t.sl = texture->t.w * texture->t.opp;
+	texture->t.w < 0 ? texture->t.w = -texture->t.w : 0;
+	texture->t.h < 0 ? texture->t.h = -texture->t.h : 0;
+	texture->t.size = texture->t.sl * texture->t.h;
 }
 
-void	get_image(t_texture *texture, char *buffer, int i)
+static void	create_bmp_img(t_bmp_texture_lst *texture, char *buffer, int i)
 {
-	int	h;
 	int	j;
-	int	size;
+	int k;
+	int	l;
 
-	h = 0;
-	size = texture->size * 2;
-	if (!(texture->img = malloc(sizeof(unsigned char) * size)))
+	if (!(texture->t.img = malloc(sizeof(unsigned char) * texture->t.size)))
 		exit(EXIT_FAILURE);
-	while (i >= 0)
+	l = 0;
+	while ((i -= texture->t.sl) >= 0)
 	{
-		i -= texture->sl;
-		j = 0;
-		while (j < texture->sl)
+		j = -texture->t.opp;
+		while ((j += texture->t.opp) < texture->t.sl)
 		{
-			texture->img[h + j] = (unsigned char)buffer[i + j + 2];
-			texture->img[h + j + 1] = (unsigned char)buffer[i + j + 1];
-			texture->img[h + j + 2] = (unsigned char)buffer[i + j];
-			j += 3;
+			k = -1;
+			while (++k < texture->t.opp)
+				texture->t.img[l + j + k] = (unsigned char)buffer[i + j + (texture->t.opp - k - 1)];
 		}
-		h += texture->sl;
+		l += texture->t.sl;
 	}
+}
+
+static void	create_gl_texture(t_bmp_texture_lst *texture)
+{
+	glGenTextures(1, &(texture->t.gl_texture));
+	glBindTexture(GL_TEXTURE_2D, texture->t.gl_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->t.w, texture->t.h, 0, GL_RGB, GL_UNSIGNED_BYTE, texture->t.img);
 }
 
 void	load_bmp(char *filename)
 {
-	t_texture	texture;
-	int			fd;
-	int			i;
-	char		*buffer;
+	t_bmp_texture_lst	*texture;
+	int					fd;
+	int					i;
+	char				*buffer;
 
-	read_header(filename, &texture);
-	buffer = (char*)malloc(sizeof(char) * texture.size + 1);
+	if (!(texture = malloc(sizeof(t_bmp_texture_lst))))
+		exit(EXIT_FAILURE);
+	create_bmp_header(filename, texture);
+	buffer = (char*)malloc(sizeof(char) * texture->t.size + 1);
 	if ((fd = open(filename, O_RDWR)) == -1)
 	{
 		ft_printf("fail to open file %s\n", filename);
 		exit(EXIT_FAILURE);
 	}
 	lseek(fd, 54, SEEK_SET);
-	i = read(fd, buffer, texture.size);
-	get_image(&texture, buffer, i);
+	i = read(fd, buffer, texture->t.size);
+	create_bmp_img(texture, buffer, i);
 	ft_strdel((char**)&buffer);
 	close(fd);
+	create_gl_texture(texture);
+	texture->next = g_a->object.objects->groups->textures_bmp;
+	g_a->object.objects->groups->textures_bmp = texture;
+	g_a->object.objects->groups->used_texture_bmp = texture;
 }
 
 void		init(void)
@@ -181,14 +199,17 @@ void		init(void)
 	glfwMakeContextCurrent(g_a->window);
 	glfwSwapInterval(1);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_3D);
+	glEnable(GL_TEXTURE_2D);
 	load_bmp("textures/metal.bmp");
+	load_bmp("textures/tiles.bmp");
 }
 
 static void free_g_a2(t_obj_group *group)
 {
 	t_obj_face			*tmp_face[2];
 	t_obj_verticle_lst	*tmp_verticle[2];
+	t_obj_texture_lst	*tmp_texture[2];
+	t_bmp_texture_lst	*tmp_bmp_texture[2];
 
 	tmp_face[0] = group->faces;
 	while(tmp_face[0])
@@ -200,6 +221,13 @@ static void free_g_a2(t_obj_group *group)
 			tmp_verticle[0] = tmp_verticle[0]->next;
 			free(tmp_verticle[1]);
 		}
+		tmp_texture[0] = tmp_face[0]->texture_coord;
+		while (tmp_texture[0])
+		{
+			tmp_texture[1] = tmp_texture[0];
+			tmp_texture[0] = tmp_texture[0]->next;
+			free(tmp_texture[1]);
+		}
 		tmp_face[1] = tmp_face[0];
 		tmp_face[0] = tmp_face[0]->next;
 		free(tmp_face[1]);
@@ -210,6 +238,21 @@ static void free_g_a2(t_obj_group *group)
 		tmp_verticle[1] = tmp_verticle[0];
 		tmp_verticle[0] = tmp_verticle[0]->next;
 		free(tmp_verticle[1]);
+	}
+	tmp_texture[0] = group->textures;
+	while (tmp_texture[0])
+	{
+		tmp_texture[1] = tmp_texture[0];
+		tmp_texture[0] = tmp_texture[0]->next;
+		free(tmp_texture[1]);
+	}
+	tmp_bmp_texture[0] = group->textures_bmp;
+	while (tmp_bmp_texture[0])
+	{
+		tmp_bmp_texture[1] = tmp_bmp_texture[0];
+		tmp_bmp_texture[0] = tmp_bmp_texture[0]->next;
+		free(tmp_bmp_texture[1]->t.img);
+		free(tmp_bmp_texture[1]);
 	}
 }
 

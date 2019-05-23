@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 12:23:28 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:15:03 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int				obj_not_implemented(t_obj obj_info, char **args, int line_nb);
 int				obj_comment(t_obj obj_info, char **args, int line_nb);
 int				obj_verticle(t_obj obj_info, char **args, int line_nb);
 int				obj_texture(t_obj obj_info, char **args, int line_nb);
+int				obj_normal(t_obj obj_info, char **args, int line_nb);
 int				obj_faces(t_obj obj_info, char **args, int line_nb);
 void			parse(char *filename);
 
@@ -72,5 +73,9 @@ void			zoom_object(double offset);
 void			transform(void);
 void			set_camera(float ratio);
 void			draw(void);
+
+t_obj_verticle_lst	*get_verticle_by_id(int id);
+t_obj_texture_lst	*get_texture_by_id(int id);
+t_obj_normal_lst	*get_normal_by_id(int id);
 
 #endif

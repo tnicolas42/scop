@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:19:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/22 19:36:08 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/23 16:40:47 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,13 @@ static void	draw_faces(t_obj_group *group)
 {
 	t_obj_face			*tmp;
 	t_obj_verticle_lst	*verticle_tmp;
+	t_obj_texture_lst	*texture_tmp;
 	t_vector3			center;
 
+	if (group->used_texture_bmp == NULL)
+		glBindTexture(GL_TEXTURE_2D, 0);
+	else
+		glBindTexture(GL_TEXTURE_2D, group->used_texture_bmp->t.gl_texture);
 	center = g_a->object.description.center;
 	tmp = group->faces;
 	while (tmp)
@@ -44,12 +49,15 @@ static void	draw_faces(t_obj_group *group)
 		glBegin(GL_POLYGON);
 		glColor3ub(100, 100, 100);
 		verticle_tmp = tmp->verticles;
-		while (verticle_tmp)
+		texture_tmp = tmp->texture_coord;
+		while (verticle_tmp && texture_tmp)
 		{
+			glTexCoord2d(texture_tmp->t.position.x, texture_tmp->t.position.y);
 			glVertex3d(verticle_tmp->v.position.x - center.x,
 				verticle_tmp->v.position.y - center.y,
 				verticle_tmp->v.position.z - center.z);
 			verticle_tmp = verticle_tmp->next;
+			texture_tmp = texture_tmp->next;
 		}
 		glEnd();
 		tmp = tmp->next;

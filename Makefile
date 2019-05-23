@@ -6,7 +6,7 @@
 #    By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2019/05/23 12:23:24 by tnicolas         ###   ########.fr        #
+#    Updated: 2019/05/23 16:31:17 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ FILES = main.c \
 		transform.c \
 		draw.c \
 		loop.c \
-		parse_type1.c
+		parse_type1.c \
+		utils.c
 
 HFILES = libft/includes/libft.h \
 		 includes/scop.h \
@@ -38,7 +39,7 @@ LIBS_LIB = -L $(LIBS_DIR)/glfw/src -lglfw3 -framework Cocoa -framework OpenGL -f
 
 
 CC = gcc
-CFLAGS = -Wall -Wno-deprecated -Wextra -g3 #-fsanitize=address # -Werror
+CFLAGS = -Wall -Wno-deprecated -Wextra -g3 -fsanitize=address # -Werror
 
 OBJS_DIR = objs/
 SRCS_DIR = srcs/

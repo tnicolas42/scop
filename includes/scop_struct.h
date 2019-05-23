@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 12:51:12 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/23 17:21:36 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,6 @@
 # define GLFW_INCLUDE_GLU
 # include <GLFW/glfw3.h>
 
-/*
-**	used to save textures (BMP)
-**		img -> the image data
-**		w -> the image width (in pixel)
-**		h -> the image height (in pixel)
-**		sl
-**		bpp -> bits per pixel (24)
-**		opp -> octet per pixel (3) = bpp / 8
-*/
-
-typedef struct	s_texture
-{
-	unsigned char	*img;
-	int				size;
-	int				w;
-	int				h;
-	int				sl;
-	short			bpp;
-	short			opp;
-}				t_texture;
 
 /*
 **	simple object with information about the coordinate (x, y, and z)
@@ -118,7 +98,6 @@ typedef struct		s_obj_verticle
 {
 	int						id;
 	t_vector3				position;
-	struct s_obj_verticle	*next;
 }					t_obj_verticle;
 
 typedef struct		s_obj_verticle_lst
@@ -128,14 +107,58 @@ typedef struct		s_obj_verticle_lst
 }					t_obj_verticle_lst;
 
 /*
+**	chained list with all normales (vn ...)
+*/
+
+typedef struct		s_obj_normal
+{
+	int						id;
+	t_vector3				position;
+}					t_obj_normal;
+
+typedef struct		s_obj_normal_lst
+{
+	t_obj_normal				vn;
+	struct s_obj_normal_lst	*next;
+}					t_obj_normal_lst;
+
+/*
 **	chained list with all textures coordinates (vt ...)
 */
 
+/*
+**	used to save textures (BMP)
+**		id -> id of the texture (from 1 to n)
+**		img -> the image data
+**		w -> the image width (in pixel)
+**		h -> the image height (in pixel)
+**		sl -> size of a line (in octet)
+**		bpp -> bits per pixel (24)
+**		opp -> octet per pixel (3) = bpp / 8
+*/
+
+typedef struct		s_bmp_texture
+{
+	GLuint			gl_texture;
+	unsigned char	*img;
+	int				size;
+	int				w;
+	int				h;
+	int				sl;
+	short			bpp;
+	short			opp;
+}					t_bmp_texture;
+
+typedef struct		s_bmp_texture_lst
+{
+	t_bmp_texture				t;
+	struct s_bmp_texture_lst	*next;
+}					t_bmp_texture_lst;
+
 typedef struct		s_obj_texture
 {
-	int						id;
-	t_vector2				position;
-	struct s_obj_texture	*next;
+	int				id;
+	t_vector3		position;
 }					t_obj_texture;
 
 typedef struct		s_obj_texture_lst
@@ -151,7 +174,8 @@ typedef struct		s_obj_texture_lst
 typedef struct		s_obj_face
 {
 	t_obj_verticle_lst	*verticles;
-	t_obj_texture_lst	*textures;
+	t_obj_texture_lst	*texture_coord;
+	t_obj_normal_lst	*normales;
 	struct s_obj_face	*next;
 }					t_obj_face;
 
@@ -164,6 +188,9 @@ typedef struct		s_obj_group
 	char				*name;
 	t_obj_verticle_lst	*verticles;
 	t_obj_texture_lst	*textures;
+	t_obj_normal_lst	*normales;
+	t_bmp_texture_lst	*textures_bmp;
+	t_bmp_texture_lst	*used_texture_bmp;
 	t_obj_face			*faces;
 	struct s_obj_group	*next;
 }					t_obj_group;
