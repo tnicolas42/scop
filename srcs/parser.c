@@ -52,7 +52,7 @@ static void	parse_line(char *line, int line_nb)
 		}
 		i++;
 	}
-	if (i >= NB_TYPE_OBJ_FILE)
+	if (words[0][0] != '#' && i >= NB_TYPE_OBJ_FILE)
 	{
 		ft_printf("invalid command %s (line %d): '%s'\n", words[0], line_nb, line);
 		ft_free_tab(1, words);
