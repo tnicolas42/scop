@@ -1,4 +1,4 @@
-//#version 410 core
+#version 120
 
 varying vec3 N;
 varying vec3 v;

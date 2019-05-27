@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 16:29:21 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 17:44:11 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		set_camera_pos(void)
 	g_a->cam.vert_vector.x = 0;
 	g_a->cam.vert_vector.y = 0;
 	g_a->cam.vert_vector.z = 1;
-	g_a->cam.near = g_a->object.description.max_size / CAMERA_NEAR;
+	g_a->cam.near = g_a->object.description.max_size * CAMERA_NEAR;
 	g_a->cam.far = g_a->object.description.max_size * CAMERA_FAR;
 }
 
@@ -192,7 +192,6 @@ void	load_bmp(char *filename)
 	create_gl_texture(texture);
 	texture->next = g_a->object.objects->groups->textures_bmp;
 	g_a->object.objects->groups->textures_bmp = texture;
-	g_a->object.objects->groups->used_texture_bmp = texture;
 }
 
 void		init(void)
@@ -227,8 +226,12 @@ void		init(void)
 	glShadeModel(GL_SMOOTH);
 	load_bmp("textures/metal.bmp");
 	load_bmp("textures/tiles.bmp");
+	load_bmp("textures/unicorn.bmp");
 	if (ENABLE_SHADER)
+	{
+		glEnable(GL_LIGHTING);
 		init_shader();
+	}
 }
 
 static void free_g_a2(t_obj_group *group)

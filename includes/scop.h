@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 16:37:12 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 17:53:25 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <stdbool.h>
 # include <scop_struct.h>
 
-# define SC_WIDTH 640
-# define SC_HEIGHT 480
+# define SC_WIDTH 1000
+# define SC_HEIGHT 800
 
 # define MOVING_SPEED_MOUSE 0.01
 # define MOVING_SPEED_KEYBOARD 0.1
@@ -31,8 +31,8 @@
 # define ZOOM_MIN 0.1
 # define ZOOM_MAX 15
 
-# define CAMERA_POS_Y 2
-# define CAMERA_NEAR 1
+# define CAMERA_POS_Y 1
+# define CAMERA_NEAR 0.3
 # define CAMERA_FAR 50
 
 # define SUCCESS 1
@@ -44,8 +44,8 @@
 # define DRAW_FACES true
 # define AUTO_MOVING true
 
-# define ENABLE_SHADER false
-// # define ENABLE_SHADER true
+// # define ENABLE_SHADER false
+# define ENABLE_SHADER true
 # define SHADER_VERTEX_PATH "shaders/vertex.glsl"
 # define SHADER_FRAGMENT_PATH "shaders/fragment.glsl"
 # define MIN_GREY_COLOR 45
