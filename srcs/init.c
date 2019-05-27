@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 15:34:54 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:29:21 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,17 @@ static void	init_object(void)
 	g_a->object.material.specular.y = 0.727811;
 	g_a->object.material.specular.z = 0.633;
 	g_a->object.material.shininess = 0.6;
+
+	g_a->object.material.ambient.x = 2;
+	g_a->object.material.ambient.y = 2;
+	g_a->object.material.ambient.z = 2;
+	g_a->object.material.diffuse.x = 0.5;
+	g_a->object.material.diffuse.y = 0.5;
+	g_a->object.material.diffuse.z = 0.5;
+	g_a->object.material.specular.x = 0.02;
+	g_a->object.material.specular.y = 0.02;
+	g_a->object.material.specular.z = 0.02;
+	g_a->object.material.shininess = 10;
 }
 
 static void	init_a(void)
@@ -187,6 +198,7 @@ void	load_bmp(char *filename)
 void		init(void)
 {
 	init_a();
+	srand(time(NULL));
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);

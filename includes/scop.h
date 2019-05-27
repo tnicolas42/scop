@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 15:35:03 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:37:12 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,12 @@
 # define DRAW_FACES true
 # define AUTO_MOVING true
 
-# define ENABLE_SHADER true
+# define ENABLE_SHADER false
+// # define ENABLE_SHADER true
 # define SHADER_VERTEX_PATH "shaders/vertex.glsl"
 # define SHADER_FRAGMENT_PATH "shaders/fragment.glsl"
+# define MIN_GREY_COLOR 45
+# define MAX_GREY_COLOR 200
 
 extern t_a		*g_a;
 

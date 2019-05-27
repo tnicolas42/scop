@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 15:36:24 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:28:59 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ typedef struct		s_obj_face
 	t_obj_verticle_lst	*verticles;
 	t_obj_texture_lst	*texture_coord;
 	t_obj_normal_lst	*normales;
+	t_vector3			color;
 	struct s_obj_face	*next;
 }					t_obj_face;
 

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:19:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 17:40:20 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:32:35 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	draw_faces(t_obj_group *group)
 	while (tmp)
 	{
 		glBegin(GL_POLYGON);
-		glColor3ub(100, 100, 100);
+		glColor3ub(255, 255, 255);
 		verticle_tmp = tmp->verticles;
 		texture_tmp = tmp->texture_coord;
 		normal_tmp = tmp->normales;
@@ -57,6 +57,8 @@ static void	draw_faces(t_obj_group *group)
 			if (normal_tmp->vn.id > 0)
 				glNormal3d(normal_tmp->vn.position.x,
 					normal_tmp->vn.position.y, normal_tmp->vn.position.z);
+			if (group->used_texture_bmp == NULL)
+				glColor3ub(tmp->color.x, tmp->color.y, tmp->color.z);
 			glTexCoord2d(texture_tmp->t.position.x, texture_tmp->t.position.y);
 			glVertex3d(verticle_tmp->v.position.x - center.x,
 				verticle_tmp->v.position.y - center.y,
