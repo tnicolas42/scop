@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 16:28:59 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 18:23:25 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ typedef struct		s_bmp_texture
 	int				sl;
 	short			bpp;
 	short			opp;
+	bool			is_default_tex;
 }					t_bmp_texture;
 
 typedef struct		s_bmp_texture_lst
@@ -169,6 +170,7 @@ typedef struct		s_bmp_texture_lst
 typedef struct		s_obj_texture
 {
 	int				id;
+	bool			is_default_tex;
 	t_vector3		position;
 }					t_obj_texture;
 

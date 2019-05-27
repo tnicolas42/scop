@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:19:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 16:32:35 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 18:27:38 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	draw_faces(t_obj_group *group)
 			if (normal_tmp->vn.id > 0)
 				glNormal3d(normal_tmp->vn.position.x,
 					normal_tmp->vn.position.y, normal_tmp->vn.position.z);
-			if (group->used_texture_bmp == NULL)
+			if (group->used_texture_bmp == NULL || group->used_texture_bmp->t.is_default_tex)
 				glColor3ub(tmp->color.x, tmp->color.y, tmp->color.z);
 			glTexCoord2d(texture_tmp->t.position.x, texture_tmp->t.position.y);
 			glVertex3d(verticle_tmp->v.position.x - center.x,

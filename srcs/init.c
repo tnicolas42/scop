@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 17:44:11 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 18:35:14 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,27 +71,16 @@ static void	init_object(void)
 	g_a->object.objects->groups->used_texture_bmp = NULL;
 	g_a->object.objects->groups->faces = NULL;
 
-	g_a->object.material.ambient.x = 0.0215;
-	g_a->object.material.ambient.y = 0.1745;
-	g_a->object.material.ambient.z = 0.0215;
-	g_a->object.material.diffuse.x = 0.07568;
-	g_a->object.material.diffuse.y = 0.61424;
-	g_a->object.material.diffuse.z = 0.07568;
-	g_a->object.material.specular.x = 0.633;
-	g_a->object.material.specular.y = 0.727811;
-	g_a->object.material.specular.z = 0.633;
-	g_a->object.material.shininess = 0.6;
-
-	g_a->object.material.ambient.x = 2;
-	g_a->object.material.ambient.y = 2;
-	g_a->object.material.ambient.z = 2;
-	g_a->object.material.diffuse.x = 0.5;
-	g_a->object.material.diffuse.y = 0.5;
-	g_a->object.material.diffuse.z = 0.5;
-	g_a->object.material.specular.x = 0.02;
-	g_a->object.material.specular.y = 0.02;
-	g_a->object.material.specular.z = 0.02;
-	g_a->object.material.shininess = 10;
+	g_a->object.material.ambient.x = 0.5;
+	g_a->object.material.ambient.y = 0.5;
+	g_a->object.material.ambient.z = 0.5;
+	g_a->object.material.diffuse.x = 0.3;
+	g_a->object.material.diffuse.y = 0.3;
+	g_a->object.material.diffuse.z = 0.3;
+	g_a->object.material.specular.x = 0.08;
+	g_a->object.material.specular.y = 0.08;
+	g_a->object.material.specular.z = 0.08;
+	g_a->object.material.shininess = 1;
 }
 
 static void	init_a(void)
@@ -168,7 +157,7 @@ static void	create_gl_texture(t_bmp_texture_lst *texture)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->t.w, texture->t.h, 0, GL_RGB, GL_UNSIGNED_BYTE, texture->t.img);
 }
 
-void	load_bmp(char *filename)
+void	load_bmp(char *filename, bool default_tex)
 {
 	t_bmp_texture_lst	*texture;
 	int					fd;
@@ -190,8 +179,11 @@ void	load_bmp(char *filename)
 	ft_strdel((char**)&buffer);
 	close(fd);
 	create_gl_texture(texture);
+	texture->t.is_default_tex = default_tex;
 	texture->next = g_a->object.objects->groups->textures_bmp;
 	g_a->object.objects->groups->textures_bmp = texture;
+	if (default_tex || g_a->object.objects->groups->used_texture_bmp == NULL)
+		g_a->object.objects->groups->used_texture_bmp = texture;
 }
 
 void		init(void)
@@ -224,9 +216,10 @@ void		init(void)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);
-	load_bmp("textures/metal.bmp");
-	load_bmp("textures/tiles.bmp");
-	load_bmp("textures/unicorn.bmp");
+	load_bmp("textures/metal.bmp", false);
+	load_bmp("textures/tiles.bmp", false);
+	load_bmp("textures/unicorn.bmp", false);
+	load_bmp("textures/default.bmp", true);
 	if (ENABLE_SHADER)
 	{
 		glEnable(GL_LIGHTING);
