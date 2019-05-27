@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 17:21:36 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 11:31:50 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ typedef struct		s_shader
 {
 	GLuint			vert_id;
 	GLuint			frag_id;
+	GLuint			program;
 }					t_shader;
 
 /*

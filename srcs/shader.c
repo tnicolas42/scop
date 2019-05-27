@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 18:10:37 by tim               #+#    #+#             */
-/*   Updated: 2019/05/27 11:27:42 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 11:40:11 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void compil_shader(GLuint *shader_id, GLenum type, char *filename)
 {
     char    *file_content;
     GLint   compile_error;
+    char *error;
 
     *shader_id = glCreateShader(type);
 
@@ -35,7 +36,6 @@ static void compil_shader(GLuint *shader_id, GLenum type, char *filename)
     glGetShaderiv(*shader_id, GL_COMPILE_STATUS, &compile_error);
     if (compile_error != GL_TRUE)
     {
-        char *error;
         glGetShaderiv(*shader_id, GL_INFO_LOG_LENGTH, &compile_error);
         if (!(error = malloc(sizeof(char) * (compile_error + 1))))
             exit(EXIT_FAILURE);
@@ -50,6 +50,23 @@ static void compil_shader(GLuint *shader_id, GLenum type, char *filename)
 
 void        init_shader(void)
 {
+    GLint  success;
+    char    infoLog[512];
+
     compil_shader(&(g_a->shader.vert_id), GL_VERTEX_SHADER, SHADER_VERTEX_PATH);
     compil_shader(&(g_a->shader.frag_id), GL_FRAGMENT_SHADER, SHADER_FRAGMENT_PATH);
+    g_a->shader.program = glCreateProgram();
+    glAttachShader(g_a->shader.program, g_a->shader.vert_id);
+    glAttachShader(g_a->shader.program, g_a->shader.frag_id);
+    glLinkProgram(g_a->shader.program);
+    glGetProgramiv(g_a->shader.program, GL_LINK_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(g_a->shader.program, 512, NULL, infoLog);
+        ft_printf("%s", infoLog);
+        exit(EXIT_FAILURE);
+    }
+    glDeleteShader(g_a->shader.vert_id);
+    glDeleteShader(g_a->shader.frag_id);
+    glUseProgram(g_a->shader.program);
 }

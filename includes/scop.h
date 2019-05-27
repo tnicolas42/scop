@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/24 18:14:48 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/27 11:41:50 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define DRAW_FACES true
 # define AUTO_MOVING true
 
+# define ENABLE_SHADER true
 # define SHADER_VERTEX_PATH "shaders/vertex.glsl"
 # define SHADER_FRAGMENT_PATH "shaders/fragment.glsl"
 
