@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 18:10:37 by tim               #+#    #+#             */
-/*   Updated: 2019/05/27 11:24:17 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 11:27:42 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ static void compil_shader(GLuint *shader_id, GLenum type, char *filename)
 void        init_shader(void)
 {
     compil_shader(&(g_a->shader.vert_id), GL_VERTEX_SHADER, SHADER_VERTEX_PATH);
+    compil_shader(&(g_a->shader.frag_id), GL_FRAGMENT_SHADER, SHADER_FRAGMENT_PATH);
 }
