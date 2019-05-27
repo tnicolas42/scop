@@ -229,6 +229,16 @@ typedef struct		s_object
 }					t_object;
 
 /*
+**	all informations about the shaders
+*/
+
+typedef struct		s_shader
+{
+	GLuint			vert_id;
+	GLuint			frag_id;
+}					t_shader;
+
+/*
 **  global object with all informations about the project
 */
 
@@ -238,6 +248,7 @@ typedef struct		s_a
 	t_transform		transform;
 	t_object		object;
 	GLFWwindow		*window;
+	t_shader		shader;
 	t_key_mouse		key_mouse;
 	bool			draw_verticles;
 	bool			draw_faces;

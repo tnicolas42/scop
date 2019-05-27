@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 16:15:03 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/24 18:14:48 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define ZOOM_MAX 15
 
 # define CAMERA_POS_Y 2
-# define CAMERA_NEAR CAMERA_POS_Y
+# define CAMERA_NEAR 1
 # define CAMERA_FAR 50
 
 # define SUCCESS 1
@@ -44,7 +44,12 @@
 # define DRAW_FACES true
 # define AUTO_MOVING true
 
+# define SHADER_VERTEX_PATH "shaders/vertex.glsl"
+# define SHADER_FRAGMENT_PATH "shaders/fragment.glsl"
+
 extern t_a		*g_a;
+
+void        	init_shader(void);
 
 void			reset_transform(t_transform *transform);
 void			set_camera_pos(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 17:34:43 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/24 18:15:08 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void		init(void)
 	glEnable(GL_TEXTURE_2D);
 	load_bmp("textures/metal.bmp");
 	load_bmp("textures/tiles.bmp");
+	init_shader();
 }
 
 static void free_g_a2(t_obj_group *group)
