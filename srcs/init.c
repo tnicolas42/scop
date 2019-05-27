@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 17:34:43 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 18:35:14 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		set_camera_pos(void)
 	g_a->cam.vert_vector.x = 0;
 	g_a->cam.vert_vector.y = 0;
 	g_a->cam.vert_vector.z = 1;
-	g_a->cam.near = g_a->object.description.max_size / CAMERA_NEAR;
+	g_a->cam.near = g_a->object.description.max_size * CAMERA_NEAR;
 	g_a->cam.far = g_a->object.description.max_size * CAMERA_FAR;
 }
 
@@ -70,6 +70,17 @@ static void	init_object(void)
 	g_a->object.objects->groups->textures_bmp = NULL;
 	g_a->object.objects->groups->used_texture_bmp = NULL;
 	g_a->object.objects->groups->faces = NULL;
+
+	g_a->object.material.ambient.x = 0.5;
+	g_a->object.material.ambient.y = 0.5;
+	g_a->object.material.ambient.z = 0.5;
+	g_a->object.material.diffuse.x = 0.3;
+	g_a->object.material.diffuse.y = 0.3;
+	g_a->object.material.diffuse.z = 0.3;
+	g_a->object.material.specular.x = 0.08;
+	g_a->object.material.specular.y = 0.08;
+	g_a->object.material.specular.z = 0.08;
+	g_a->object.material.shininess = 1;
 }
 
 static void	init_a(void)
@@ -146,7 +157,7 @@ static void	create_gl_texture(t_bmp_texture_lst *texture)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->t.w, texture->t.h, 0, GL_RGB, GL_UNSIGNED_BYTE, texture->t.img);
 }
 
-void	load_bmp(char *filename)
+void	load_bmp(char *filename, bool default_tex)
 {
 	t_bmp_texture_lst	*texture;
 	int					fd;
@@ -168,14 +179,17 @@ void	load_bmp(char *filename)
 	ft_strdel((char**)&buffer);
 	close(fd);
 	create_gl_texture(texture);
+	texture->t.is_default_tex = default_tex;
 	texture->next = g_a->object.objects->groups->textures_bmp;
 	g_a->object.objects->groups->textures_bmp = texture;
-	g_a->object.objects->groups->used_texture_bmp = texture;
+	if (default_tex || g_a->object.objects->groups->used_texture_bmp == NULL)
+		g_a->object.objects->groups->used_texture_bmp = texture;
 }
 
 void		init(void)
 {
 	init_a();
+	srand(time(NULL));
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -201,8 +215,16 @@ void		init(void)
 	glfwSwapInterval(1);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	load_bmp("textures/metal.bmp");
-	load_bmp("textures/tiles.bmp");
+	glShadeModel(GL_SMOOTH);
+	load_bmp("textures/metal.bmp", false);
+	load_bmp("textures/tiles.bmp", false);
+	load_bmp("textures/unicorn.bmp", false);
+	load_bmp("textures/default.bmp", true);
+	if (ENABLE_SHADER)
+	{
+		glEnable(GL_LIGHTING);
+		init_shader();
+	}
 }
 
 static void free_g_a2(t_obj_group *group)

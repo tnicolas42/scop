@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 17:21:36 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 18:23:25 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ typedef struct		s_bmp_texture
 	int				sl;
 	short			bpp;
 	short			opp;
+	bool			is_default_tex;
 }					t_bmp_texture;
 
 typedef struct		s_bmp_texture_lst
@@ -169,6 +170,7 @@ typedef struct		s_bmp_texture_lst
 typedef struct		s_obj_texture
 {
 	int				id;
+	bool			is_default_tex;
 	t_vector3		position;
 }					t_obj_texture;
 
@@ -187,6 +189,7 @@ typedef struct		s_obj_face
 	t_obj_verticle_lst	*verticles;
 	t_obj_texture_lst	*texture_coord;
 	t_obj_normal_lst	*normales;
+	t_vector3			color;
 	struct s_obj_face	*next;
 }					t_obj_face;
 
@@ -217,6 +220,13 @@ typedef struct		s_obj_obj
 	struct s_obj_obj	*next;
 }					t_obj_obj;
 
+typedef struct		s_material {
+	t_vector3		ambient;
+	t_vector3		diffuse;
+	t_vector3		specular;
+    float			shininess;
+}					t_material;
+
 /*
 **	all informations about an object
 */
@@ -225,8 +235,20 @@ typedef struct		s_object
 {
 	t_description	description;
 	t_transform		transform;
+	t_material		material;
 	t_obj_obj		*objects;
 }					t_object;
+
+/*
+**	all informations about the shaders
+*/
+
+typedef struct		s_shader
+{
+	GLuint			vert_id;
+	GLuint			frag_id;
+	GLuint			program;
+}					t_shader;
 
 /*
 **  global object with all informations about the project
@@ -238,6 +260,7 @@ typedef struct		s_a
 	t_transform		transform;
 	t_object		object;
 	GLFWwindow		*window;
+	t_shader		shader;
 	t_key_mouse		key_mouse;
 	bool			draw_verticles;
 	bool			draw_faces;

@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:49:57 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 17:19:03 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 16:36:46 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,6 @@ static int	parse_one_face_element(t_obj_face *new, char *arg)
 	int					get_nb;
 	void				*tmp[2];
 
-	// ft_printf("arg: %s\n", arg);
 	act_val = 0;
 	str_ptr = arg;
 	while (act_val < 3)
@@ -280,6 +279,9 @@ int		obj_faces(t_obj obj_info, char **args, int line_nb)
 		free(new);
 		return (ERROR);
 	}
+	new->color.x = rand() % (MAX_GREY_COLOR - MIN_GREY_COLOR) + MIN_GREY_COLOR;
+	new->color.y = new->color.x;
+	new->color.z = new->color.x;
 	new->next = g_a->object.objects->groups->faces;
 	g_a->object.objects->groups->faces = new;
 	return (SUCCESS);

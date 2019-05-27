@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+         #
+#    By: tim <tim@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2019/05/23 16:31:17 by tnicolas         ###   ########.fr        #
+#    Updated: 2019/05/24 18:14:18 by tim              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ FILES = main.c \
 		draw.c \
 		loop.c \
 		parse_type1.c \
-		utils.c
+		utils.c \
+		shader.c
 
 HFILES = libft/includes/libft.h \
 		 includes/scop.h \

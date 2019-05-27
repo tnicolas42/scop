@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:34:44 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 15:26:57 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 18:20:41 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,9 @@ void	key_callback(GLFWwindow *window, int key, int scancode, int action)
 		g_a->transform.position.x += MOVING_SPEED_KEYBOARD * g_a->object.description.max_size;
 	if (key == GLFW_KEY_T && action == GLFW_PRESS)
 	{
+		g_a->object.objects->groups->used_texture_bmp = g_a->object.objects->groups->used_texture_bmp->next;
 		if (g_a->object.objects->groups->used_texture_bmp == NULL)
 			g_a->object.objects->groups->used_texture_bmp = g_a->object.objects->groups->textures_bmp;
-		else
-			g_a->object.objects->groups->used_texture_bmp = g_a->object.objects->groups->used_texture_bmp->next;
 	}
 	if (key == GLFW_KEY_M && action == GLFW_PRESS)
 		g_a->is_auto_moving = !g_a->is_auto_moving;
