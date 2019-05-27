@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 18:10:37 by tim               #+#    #+#             */
-/*   Updated: 2019/05/24 18:32:47 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/27 11:24:17 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ static void compil_shader(GLuint *shader_id, GLenum type, char *filename)
         char *error;
         glGetShaderiv(*shader_id, GL_INFO_LOG_LENGTH, &compile_error);
         if (!(error = malloc(sizeof(char) * (compile_error + 1))))
+            exit(EXIT_FAILURE);
         glGetShaderInfoLog(*shader_id, compile_error, &compile_error, error);
         error[compile_error] = '\0';
-        ft_printf("error: %s\n", error);
+        ft_printf("in file: %s -> %s", filename, error);
         free(error);
         glDeleteShader(*shader_id);
         exit(EXIT_FAILURE);
