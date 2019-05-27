@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 11:41:43 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 15:34:54 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,17 @@ static void	init_object(void)
 	g_a->object.objects->groups->textures_bmp = NULL;
 	g_a->object.objects->groups->used_texture_bmp = NULL;
 	g_a->object.objects->groups->faces = NULL;
+
+	g_a->object.material.ambient.x = 0.0215;
+	g_a->object.material.ambient.y = 0.1745;
+	g_a->object.material.ambient.z = 0.0215;
+	g_a->object.material.diffuse.x = 0.07568;
+	g_a->object.material.diffuse.y = 0.61424;
+	g_a->object.material.diffuse.z = 0.07568;
+	g_a->object.material.specular.x = 0.633;
+	g_a->object.material.specular.y = 0.727811;
+	g_a->object.material.specular.z = 0.633;
+	g_a->object.material.shininess = 0.6;
 }
 
 static void	init_a(void)
@@ -201,6 +212,7 @@ void		init(void)
 	glfwSwapInterval(1);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
+	glShadeModel(GL_SMOOTH);
 	load_bmp("textures/metal.bmp");
 	load_bmp("textures/tiles.bmp");
 	if (ENABLE_SHADER)

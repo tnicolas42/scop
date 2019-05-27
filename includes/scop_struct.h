@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 11:31:50 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/27 15:36:24 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,13 @@ typedef struct		s_obj_obj
 	struct s_obj_obj	*next;
 }					t_obj_obj;
 
+typedef struct		s_material {
+	t_vector3		ambient;
+	t_vector3		diffuse;
+	t_vector3		specular;
+    float			shininess;
+}					t_material;
+
 /*
 **	all informations about an object
 */
@@ -225,6 +232,7 @@ typedef struct		s_object
 {
 	t_description	description;
 	t_transform		transform;
+	t_material		material;
 	t_obj_obj		*objects;
 }					t_object;
 
