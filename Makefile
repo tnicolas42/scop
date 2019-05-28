@@ -6,14 +6,14 @@
 #    By: tim <tim@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2019/05/24 18:14:18 by tim              ###   ########.fr        #
+#    Updated: 2019/05/28 13:46:52 by tim              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = scop
 PROJECT_NAME = $(shell echo $(NAME) | tr a-z A-Z)  # name in MAJUSCULE
 
-ARGS =
+ARGS = obj_files/42.obj
 
 FILES = main.c \
 		parser.c \

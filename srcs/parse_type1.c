@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_type1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:49:57 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 16:36:46 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/28 14:11:23 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int		obj_not_implemented(t_obj obj_info, char **args, int line_nb)
 {
 	(void)args;
 	(void)line_nb;
-	ft_printf("line %d: %s (%s) is not implemented\n",
-		line_nb, obj_info.name, obj_info.description);
+	if (PRINT_NOT_IMPLEMENTED)
+		ft_printf("line %d: %s (%s) is not implemented\n",
+			line_nb, obj_info.name, obj_info.description);
 	return (SUCCESS);
 }
 
