@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 15:50:25 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 16:37:37 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/28 17:59:23 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,39 @@ t_obj_normal_lst	*get_normal_by_id(int id)
 	while (tmp->vn.id > id)
 		tmp = tmp->next;
 	return tmp;
+}
+
+int					ft_error(bool exit_, char *format, ...)
+{
+	va_list	ap;
+	char	*str;
+	int		ret;
+
+	if (format == NULL)
+	{
+		if (exit_)
+			exit(EXIT_FAILURE);
+		return (ERROR);
+	}
+	str = NULL;
+	va_start(ap, format);
+	if ((ret = ft_vasprintf(&str, format, ap)) == ERROR)
+	{
+		va_end(ap);
+		if (exit_)
+			exit(EXIT_FAILURE);
+		return (ERROR);
+	}
+	va_end(ap);
+	if (str != NULL)
+		if (write(STDERR_FILENO, str, ret) == -1 && ft_free(1, str))
+		{
+			if (exit_)
+				exit(EXIT_FAILURE);
+			return (ERROR);
+		}
+	free(str);
+	if (exit_)
+		exit(EXIT_FAILURE);
+	return (ERROR);
 }

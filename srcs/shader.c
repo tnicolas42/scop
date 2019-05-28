@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 18:10:37 by tim               #+#    #+#             */
-/*   Updated: 2019/05/27 16:19:18 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/28 17:58:08 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,9 @@ static void compil_shader(GLuint *shader_id, GLenum type, char *filename)
     *shader_id = glCreateShader(type);
 
     if (*shader_id == 0)
-    {
-        ft_printf("error when creating shader\n");
-        exit(EXIT_FAILURE);
-    }
+        ft_error(true, "error when creating shader\n");
     if (ft_read_file(filename, &file_content) == 0)
-    {
-        ft_printf("error when readind shader: %s\n", filename);
-        exit(EXIT_FAILURE);
-    }
+        ft_error(true, "error when readind shader: %s\n", filename);
     glShaderSource(*shader_id, 1, (const GLchar *const *)&file_content, 0);
     glCompileShader(*shader_id);
     compile_error = 0;
@@ -38,13 +32,13 @@ static void compil_shader(GLuint *shader_id, GLenum type, char *filename)
     {
         glGetShaderiv(*shader_id, GL_INFO_LOG_LENGTH, &compile_error);
         if (!(error = malloc(sizeof(char) * (compile_error + 1))))
-            exit(EXIT_FAILURE);
+            ft_error(true, NULL);
         glGetShaderInfoLog(*shader_id, compile_error, &compile_error, error);
         error[compile_error] = '\0';
         ft_printf("in file %s:\n%s", filename, error);
         free(error);
         glDeleteShader(*shader_id);
-        exit(EXIT_FAILURE);
+        ft_error(true, NULL);
     }
 }
 
@@ -75,8 +69,7 @@ void        init_shader(void)
     if (!success)
     {
         glGetShaderInfoLog(g_a->shader.program, 512, NULL, infoLog);
-        ft_printf("%s", infoLog);
-        exit(EXIT_FAILURE);
+        ft_error(true, "%s", infoLog);
     }
     glDeleteShader(g_a->shader.vert_id);
     glDeleteShader(g_a->shader.frag_id);

@@ -6,7 +6,7 @@
 /*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:19:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 15:02:36 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/28 18:09:21 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,38 @@ static void	set_color(t_obj_group *group)
 	}
 }
 
-static void	draw_faces(t_obj_group *group)
+static void draw_faces_1(t_obj_group *group, t_obj_face *tmp, t_vector3 center)
 {
-	t_obj_face			*tmp;
 	t_obj_verticle_lst	*verticle_tmp;
 	t_obj_texture_lst	*texture_tmp;
 	t_obj_normal_lst	*normal_tmp;
+
+	verticle_tmp = tmp->verticles;
+	texture_tmp = tmp->texture_coord;
+	normal_tmp = tmp->normales;
+	while (verticle_tmp && texture_tmp)
+	{
+		if (normal_tmp->vn.id > 0)
+			glNormal3d(normal_tmp->vn.position.x,
+				normal_tmp->vn.position.y, normal_tmp->vn.position.z);
+		if (group->used_texture_bmp == NULL ||
+		group->used_texture_bmp->t.is_default_tex)
+			glColor3ub(ft_min(tmp->color.x, group->transition_val),
+				ft_min(tmp->color.y, group->transition_val),
+				ft_min(tmp->color.z, group->transition_val));
+		glTexCoord2d(texture_tmp->t.position.x, texture_tmp->t.position.y);
+		glVertex3d(verticle_tmp->v.position.x - center.x,
+			verticle_tmp->v.position.y - center.y,
+			verticle_tmp->v.position.z - center.z);
+		verticle_tmp = verticle_tmp->next;
+		texture_tmp = texture_tmp->next;
+		normal_tmp = normal_tmp->next;
+	}
+}
+
+static void	draw_faces(t_obj_group *group)
+{
+	t_obj_face			*tmp;
 	t_vector3			center;
 
 	if (group->used_texture_bmp == NULL)
@@ -77,31 +103,7 @@ static void	draw_faces(t_obj_group *group)
 	{
 		glBegin(GL_POLYGON);
 		glColor3ub(group->transition_val, group->transition_val, group->transition_val);
-		verticle_tmp = tmp->verticles;
-		texture_tmp = tmp->texture_coord;
-		normal_tmp = tmp->normales;
-		while (verticle_tmp && texture_tmp)
-		{
-			if (normal_tmp->vn.id > 0)
-				glNormal3d(normal_tmp->vn.position.x,
-					normal_tmp->vn.position.y, normal_tmp->vn.position.z);
-			if (group->used_texture_bmp == NULL || group->used_texture_bmp->t.is_default_tex)
-			{
-				if (group->transition_state == T_OFF)
-					glColor3ub(tmp->color.x, tmp->color.y, tmp->color.z);
-				else
-					glColor3ub(ft_min(tmp->color.x, group->transition_val),
-						ft_min(tmp->color.y, group->transition_val),
-						ft_min(tmp->color.z, group->transition_val));
-			}
-			glTexCoord2d(texture_tmp->t.position.x, texture_tmp->t.position.y);
-			glVertex3d(verticle_tmp->v.position.x - center.x,
-				verticle_tmp->v.position.y - center.y,
-				verticle_tmp->v.position.z - center.z);
-			verticle_tmp = verticle_tmp->next;
-			texture_tmp = texture_tmp->next;
-			normal_tmp = normal_tmp->next;
-		}
+		draw_faces_1(group, tmp, center);
 		glEnd();
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/22 11:49:57 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 14:11:23 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/28 18:47:53 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,39 +30,50 @@ int		obj_comment(t_obj obj_info, char **args, int line_nb)
 	return (SUCCESS);
 }
 
+static int obj_verticle_1(t_obj obj_info, char *arg, t_obj_verticle_lst *new,
+uint64_t i_linenb)
+{
+	float				nb;
+	int					i;
+	int					line_nb;
+
+	i = ft_get2arg(i_linenb, 0);
+	line_nb = ft_get2arg(i_linenb, 1);
+	if (arg == NULL)
+	{
+		free(new);
+		return ft_error(false, "line %d: %s (%s) not enouth arguments (need"
+			" 3)\n", line_nb, obj_info.name, obj_info.description);
+	}
+	nb = atof(arg);
+	if (i == 1)
+		new->v.position.x = nb;
+	else if (i == 2)
+		new->v.position.y = nb;
+	else if (i == 3)
+		new->v.position.z = nb;
+	return (SUCCESS);
+}
+
 int		obj_verticle(t_obj obj_info, char **args, int line_nb)
 {
 	t_obj_verticle_lst	*new;
-	float				nb;
 	int					i;
 
 	if (!(new = malloc(sizeof(t_obj_verticle_lst))))
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	i = 1;
 	while (i < 4)
 	{
-		if (args[i] == NULL)
-		{
-			ft_printf("line %d: %s (%s) not enouth arguments (need 3 arguments)\n",
-				line_nb, obj_info.name, obj_info.description);
-			free(new);
+		if (obj_verticle_1(obj_info, args[i], new, ft_2arg(i, line_nb)) == ERROR)
 			return (ERROR);
-		}
-		nb = atof(args[i]);
-		if (i == 1)
-			new->v.position.x = nb;
-		else if (i == 2)
-			new->v.position.y = nb;
-		else if (i == 3)
-			new->v.position.z = nb;
 		i++;
 	}
 	if (args[i] != 0)
 	{
-		ft_printf("line %d: %s (%s) too many arguments (need 3 arguments)\n",
-			line_nb, obj_info.name, obj_info.description);
 		free(new);
-		return (ERROR);
+		return ft_error(false, "line %d: %s (%s) too many arguments (need"
+			" 3)\n", line_nb, obj_info.name, obj_info.description);
 	}
 	if (g_a->object.objects->groups->verticles)
 		new->v.id = g_a->object.objects->groups->verticles->v.id + 1;
@@ -73,44 +84,57 @@ int		obj_verticle(t_obj obj_info, char **args, int line_nb)
 	return (SUCCESS);
 }
 
+static int obj_texture_1(t_obj obj_info, char *arg, t_obj_texture_lst *new,
+uint64_t i_linenb)
+{
+	float				nb;
+	int					i;
+	int					line_nb;
+
+	i = ft_get2arg(i_linenb, 0);
+	line_nb = ft_get2arg(i_linenb, 1);
+	if (arg == NULL)
+	{
+		if (i < 3)
+		{
+			free(new);
+			return ft_error(false, "line %d: %s (%s) not enouth args (need "
+				"2 or 3)\n", line_nb, obj_info.name, obj_info.description);
+		}
+		else
+			return (SUCCESS);
+	}
+	nb = atof(arg);
+	if (i == 1)
+		new->t.position.x = nb;
+	else if (i == 2)
+		new->t.position.y = nb;
+	else if (i == 3)
+		new->t.position.z = nb;
+	return (SUCCESS);
+}
+
 int		obj_texture(t_obj obj_info, char **args, int line_nb)
 {
 	t_obj_texture_lst	*new;
-	float				nb;
 	int					i;
 
 	if (!(new = malloc(sizeof(t_obj_texture_lst))))
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	i = 1;
 	while (i < 4)
 	{
-		if (args[i] == NULL)
-		{
-			if (i < 3)
-			{
-				ft_printf("line %d: %s (%s) not enouth arguments (need 2 or 3 arguments)\n",
-					line_nb, obj_info.name, obj_info.description);
-				free(new);
-				return (ERROR);
-			}
-			else
-				break ;
-		}
-		nb = atof(args[i]);
-		if (i == 1)
-			new->t.position.x = nb;
-		else if (i == 2)
-			new->t.position.y = nb;
-		else if (i == 3)
-			new->t.position.z = nb;
+		if (obj_texture_1(obj_info, args[i], new, ft_2arg(i, line_nb)) == ERROR)
+			return (ERROR);
+		if (args[i] == NULL && i >= 3)
+			break ;
 		i++;
 	}
 	if (args[i] != 0)
 	{
-		ft_printf("line %d: %s (%s) too many arguments (need 2 or 3 arguments)\n",
-			line_nb, obj_info.name, obj_info.description);
 		free(new);
-		return (ERROR);
+		return ft_error(false, "line %d: %s (%s) too many arguments (need 2 "
+			"or 3)\n", line_nb, obj_info.name, obj_info.description);
 	}
 	if (g_a->object.objects->groups->textures)
 		new->t.id = g_a->object.objects->groups->textures->t.id + 1;
@@ -121,39 +145,50 @@ int		obj_texture(t_obj obj_info, char **args, int line_nb)
 	return (SUCCESS);
 }
 
+static int obj_normal_1(t_obj obj_info, char *arg, t_obj_normal_lst *new,
+uint64_t i_linenb)
+{
+	float				nb;
+	int					i;
+	int					line_nb;
+
+	i = ft_get2arg(i_linenb, 0);
+	line_nb = ft_get2arg(i_linenb, 1);
+	if (arg == NULL)
+	{
+		free(new);
+		return ft_error(false, "line %d: %s (%s) not enouth arguments (need 3)\n",
+			line_nb, obj_info.name, obj_info.description);
+	}
+	nb = atof(arg);
+	if (i == 1)
+		new->vn.position.x = nb;
+	else if (i == 2)
+		new->vn.position.y = nb;
+	else if (i == 3)
+		new->vn.position.z = nb;
+	return (SUCCESS);
+}
+
 int		obj_normal(t_obj obj_info, char **args, int line_nb)
 {
 	t_obj_normal_lst	*new;
-	float				nb;
 	int					i;
 
 	if (!(new = malloc(sizeof(t_obj_normal_lst))))
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	i = 1;
 	while (i < 4)
 	{
-		if (args[i] == NULL)
-		{
-			ft_printf("line %d: %s (%s) not enouth arguments (need 3 arguments)\n",
-				line_nb, obj_info.name, obj_info.description);
-			free(new);
+		if (obj_normal_1(obj_info, args[i], new, ft_2arg(i, line_nb)) == ERROR)
 			return (ERROR);
-		}
-		nb = atof(args[i]);
-		if (i == 1)
-			new->vn.position.x = nb;
-		else if (i == 2)
-			new->vn.position.y = nb;
-		else if (i == 3)
-			new->vn.position.z = nb;
 		i++;
 	}
 	if (args[i] != 0)
 	{
-		ft_printf("line %d: %s (%s) too many arguments (need 3 arguments)\n",
-			line_nb, obj_info.name, obj_info.description);
 		free(new);
-		return (ERROR);
+		return ft_error(false, "line %d: %s (%s) too many arguments (need 3)\n",
+			line_nb, obj_info.name, obj_info.description);
 	}
 	if (g_a->object.objects->groups->normales)
 		new->vn.id = g_a->object.objects->groups->normales->vn.id + 1;
@@ -186,7 +221,7 @@ static int	parse_one_face_element(t_obj_face *new, char *arg)
 				return (ERROR);
 
 			if (!(tmp[1] = malloc(sizeof(t_obj_verticle_lst))))
-				exit(EXIT_FAILURE);
+				ft_error(true, NULL);
 			((t_obj_verticle_lst*)(tmp[1]))->v = ((t_obj_verticle_lst*)(tmp[0]))->v;
 			((t_obj_verticle_lst*)(tmp[1]))->next = new->verticles;
 			new->verticles = tmp[1];
@@ -196,7 +231,7 @@ static int	parse_one_face_element(t_obj_face *new, char *arg)
 			if (get_nb == -1)
 			{
 				if (!(tmp[1] = malloc(sizeof(t_obj_texture_lst))))
-					exit(EXIT_FAILURE);
+					ft_error(true, NULL);
 				((t_obj_texture_lst*)(tmp[1]))->t.id = 0;
 				((t_obj_texture_lst*)(tmp[1]))->t.position = new->verticles->v.position;
 				((t_obj_texture_lst*)(tmp[1]))->next = new->texture_coord;
@@ -209,7 +244,7 @@ static int	parse_one_face_element(t_obj_face *new, char *arg)
 					return (ERROR);
 
 				if (!(tmp[1] = malloc(sizeof(t_obj_texture_lst))))
-					exit(EXIT_FAILURE);
+					ft_error(true, NULL);
 				((t_obj_texture_lst*)(tmp[1]))->t = ((t_obj_texture_lst*)(tmp[0]))->t;
 				((t_obj_texture_lst*)(tmp[1]))->next = new->texture_coord;
 				new->texture_coord = tmp[1];
@@ -220,7 +255,7 @@ static int	parse_one_face_element(t_obj_face *new, char *arg)
 			if (get_nb == -1)
 			{
 				if (!(tmp[1] = malloc(sizeof(t_obj_normal_lst))))
-					exit(EXIT_FAILURE);
+					ft_error(true, NULL);
 				((t_obj_normal_lst*)(tmp[1]))->vn.id = 0;
 				((t_obj_normal_lst*)(tmp[1]))->next = new->normales;
 				new->normales = ((t_obj_normal_lst*)(tmp[1]));
@@ -232,7 +267,7 @@ static int	parse_one_face_element(t_obj_face *new, char *arg)
 					return (ERROR);
 
 				if (!(tmp[1] = malloc(sizeof(t_obj_normal_lst))))
-					exit(EXIT_FAILURE);
+					ft_error(true, NULL);
 				((t_obj_normal_lst*)(tmp[1]))->vn = ((t_obj_normal_lst*)(tmp[0]))->vn;
 				((t_obj_normal_lst*)(tmp[1]))->next = new->normales;
 				new->normales = tmp[1];
@@ -258,28 +293,20 @@ int		obj_faces(t_obj obj_info, char **args, int line_nb)
 	int					i;
 
 	if (!(new = malloc(sizeof(t_obj_face))))
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	new->verticles = NULL;
 	new->texture_coord = NULL;
-	i = 1;
-	while (args[i] != 0)
-	{
+	i = 0;
+	while (args[++i] != 0)
 		if (parse_one_face_element(new, args[i]) == ERROR)
 		{
-			ft_printf("line %d: %s (%s) invalid argument %s\n",
-				line_nb, obj_info.name, obj_info.description, args[i]);
 			free(new);
-			return (ERROR);
+			return ft_error(false, "line %d: %s (%s) invalid argument %s\n",
+				line_nb, obj_info.name, obj_info.description, args[i]);
 		}
-		i++;
-	}
-	if (i < 4)
-	{
-		ft_printf("line %d: %s (%s) not enouth arguments (at least 3)\n",
-			line_nb, obj_info.name, obj_info.description);
-		free(new);
-		return (ERROR);
-	}
+	if (i < 4 && ft_free(1, new))
+		return ft_error(false, "line %d: %s (%s) not enouth arguments (at least"
+			" 3)\n", line_nb, obj_info.name, obj_info.description);
 	new->color.x = rand() % (MAX_GREY_COLOR - MIN_GREY_COLOR) + MIN_GREY_COLOR;
 	new->color.y = new->color.x;
 	new->color.z = new->color.x;

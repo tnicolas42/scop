@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:47:35 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/23 16:29:34 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/28 17:56:54 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	parse_line(char *line, int line_nb)
 		i++;
 	}
 	if (!(words = ft_strsplit(line, ' ')))
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	if (words[0] == 0)
 		return ;
 	i = 0;
@@ -47,7 +47,7 @@ static void	parse_line(char *line, int line_nb)
 		if (ft_strcmp(words[0], g_obj[i].name) == 0)
 		{
 			if (g_obj[i].func(g_obj[i], words, line_nb) == ERROR)
-				exit(EXIT_FAILURE);
+				ft_error(true, NULL);
 			break ;
 		}
 		i++;
@@ -56,7 +56,7 @@ static void	parse_line(char *line, int line_nb)
 	{
 		ft_printf("invalid command %s (line %d): '%s'\n", words[0], line_nb, line);
 		ft_free_tab(1, words);
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	}
 	ft_free_tab(1, words);
 }
@@ -105,10 +105,7 @@ static void	parse_file(int fd)
 	{
 		ret_gnl = get_next_line(fd, &line);
 		if (ret_gnl == GNL_ERROR)
-		{
-			ft_printf("invalid file format\n");
-			exit(EXIT_FAILURE);
-		}
+			ft_error(true, "invalid file format\n");
 		else if (ret_gnl == GNL_LINE_READ)
 		{
 			parse_line(line, line_nb);
@@ -123,10 +120,7 @@ void		parse(char *filename)
 	int		fd;
 
 	if ((fd = open(filename, 'r')) < 0)
-	{
-		ft_printf("invalid filename %s\n", filename);
-		exit(EXIT_FAILURE);
-	}
+		ft_error(true, "invalid filename %s\n", filename);
 	parse_file(fd);
 	close(fd);
 	set_sizes();

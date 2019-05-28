@@ -6,7 +6,7 @@
 /*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 14:44:44 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/28 18:22:07 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,34 @@ void		set_camera_pos(void)
 	g_a->cam.far = g_a->object.description.max_size * CAMERA_FAR;
 }
 
+static void init_object_1(void)
+{
+	g_a->object.objects->name = NULL;
+	g_a->object.objects->next = NULL;
+	if (!(g_a->object.objects->groups = malloc(sizeof(t_obj_group))))
+		ft_error(true, NULL);
+	g_a->object.objects->groups->name = NULL;
+	g_a->object.objects->groups->next = NULL;
+	g_a->object.objects->groups->verticles = NULL;
+	g_a->object.objects->groups->textures = NULL;
+	g_a->object.objects->groups->normales = NULL;
+	g_a->object.objects->groups->textures_bmp = NULL;
+	g_a->object.objects->groups->used_texture_bmp = NULL;
+	g_a->object.objects->groups->faces = NULL;
+	g_a->object.objects->groups->transition_state = T_UP;
+	g_a->object.objects->groups->transition_val = 0;
+	g_a->object.material.ambient.x = MATERIAL_AMBIENT_R;
+	g_a->object.material.ambient.y = MATERIAL_AMBIENT_G;
+	g_a->object.material.ambient.z = MATERIAL_AMBIENT_B;
+	g_a->object.material.diffuse.x = MATERIAL_DIFFUSE_R;
+	g_a->object.material.diffuse.y = MATERIAL_DIFFUSE_G;
+	g_a->object.material.diffuse.z = MATERIAL_DIFFUSE_B;
+	g_a->object.material.specular.x = MATERIAL_SPECULAR_R;
+	g_a->object.material.specular.y = MATERIAL_SPECULAR_G;
+	g_a->object.material.specular.z = MATERIAL_SPECULAR_B;
+	g_a->object.material.shininess = MATERIAL_SHININESS;
+}
+
 static void	init_object(void)
 {
 	g_a->object.description.size.x = 0;
@@ -57,32 +85,8 @@ static void	init_object(void)
 	g_a->object.description.max_size = 0;
 	reset_transform(&(g_a->object.transform));
 	if (!(g_a->object.objects = malloc(sizeof(t_obj_obj))))
-		exit(EXIT_FAILURE);
-	g_a->object.objects->name = NULL;
-	g_a->object.objects->next = NULL;
-	if (!(g_a->object.objects->groups = malloc(sizeof(t_obj_group))))
-		exit(EXIT_FAILURE);
-	g_a->object.objects->groups->name = NULL;
-	g_a->object.objects->groups->next = NULL;
-	g_a->object.objects->groups->verticles = NULL;
-	g_a->object.objects->groups->textures = NULL;
-	g_a->object.objects->groups->normales = NULL;
-	g_a->object.objects->groups->textures_bmp = NULL;
-	g_a->object.objects->groups->used_texture_bmp = NULL;
-	g_a->object.objects->groups->faces = NULL;
-	g_a->object.objects->groups->transition_state = T_UP;
-	g_a->object.objects->groups->transition_val = 0;
-
-	g_a->object.material.ambient.x = 0.5;
-	g_a->object.material.ambient.y = 0.5;
-	g_a->object.material.ambient.z = 0.5;
-	g_a->object.material.diffuse.x = 0.3;
-	g_a->object.material.diffuse.y = 0.3;
-	g_a->object.material.diffuse.z = 0.3;
-	g_a->object.material.specular.x = 0.08;
-	g_a->object.material.specular.y = 0.08;
-	g_a->object.material.specular.z = 0.08;
-	g_a->object.material.shininess = 1;
+		ft_error(true, NULL);
+	init_object_1();
 }
 
 static void	init_a(void)
@@ -109,10 +113,7 @@ static void	create_bmp_header(char *filename, t_bmp_texture_lst *texture)
 	FILE	*file;
 
 	if ((file = fopen(filename, "r")) == NULL)
-	{
-		ft_printf("fail to open file %s\n", filename);
-		exit(EXIT_FAILURE);
-	}
+		ft_error(true, "fail to open file %s\n", filename);
 	fseek(file, 18, SEEK_SET);
 	fread(&texture->t.w, 4, 1, file);
 	fread(&texture->t.h, 4, 1, file);
@@ -133,7 +134,7 @@ static void	create_bmp_img(t_bmp_texture_lst *texture, char *buffer, int i)
 	int	l;
 
 	if (!(texture->t.img = malloc(sizeof(unsigned char) * texture->t.size)))
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	l = 0;
 	while ((i -= texture->t.sl) >= 0)
 	{
@@ -167,14 +168,11 @@ void	load_bmp(char *filename, bool default_tex)
 	char				*buffer;
 
 	if (!(texture = malloc(sizeof(t_bmp_texture_lst))))
-		exit(EXIT_FAILURE);
+		ft_error(true, NULL);
 	create_bmp_header(filename, texture);
 	buffer = (char*)malloc(sizeof(char) * texture->t.size + 1);
 	if ((fd = open(filename, O_RDWR)) == -1)
-	{
-		ft_printf("fail to open file %s\n", filename);
-		exit(EXIT_FAILURE);
-	}
+		ft_error(true, "fail to open file %s\n", filename);
 	lseek(fd, 54, SEEK_SET);
 	i = read(fd, buffer, texture->t.size);
 	create_bmp_img(texture, buffer, i);
@@ -188,36 +186,15 @@ void	load_bmp(char *filename, bool default_tex)
 		g_a->object.objects->groups->used_texture_bmp = texture;
 }
 
-void		init(void)
+static void init_1(void)
 {
-	init_a();
-	srand(time(NULL));
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	if (!glfwInit())
-	{
-		ft_putstr("Error when loading GLFW\n");
-		exit(1);
-	}
-	g_a->window = glfwCreateWindow(SC_WIDTH, SC_HEIGHT, "scop", NULL, NULL);
-	if (!g_a->window)
-	{
-		ft_putstr("Error when loading GLFW\n");
-		exit(1);
-	}
 	glfwSetErrorCallback(error_callback);
 	glfwSetKeyCallback(g_a->window, (void(*)(GLFWwindow *, int, int, int, int))
 		(size_t)&key_callback);
 	glfwSetScrollCallback(g_a->window, scroll_callback);
 	glfwSetMouseButtonCallback(g_a->window, mouse_button_callback);
 	glfwSetCursorPosCallback(g_a->window, cursor_position_callback);
-	glfwMakeContextCurrent(g_a->window);
-	glfwSwapInterval(1);
-	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	glShadeModel(GL_SMOOTH);
 	load_bmp("textures/metal.bmp", false);
 	load_bmp("textures/tiles.bmp", false);
 	load_bmp("textures/unicorn.bmp", false);
@@ -229,13 +206,29 @@ void		init(void)
 	}
 }
 
-static void free_g_a2(t_obj_group *group)
+void		init(void)
 {
-	t_obj_face			*tmp_face[2];
-	t_obj_verticle_lst	*tmp_verticle[2];
-	t_obj_texture_lst	*tmp_texture[2];
-	t_bmp_texture_lst	*tmp_bmp_texture[2];
+	init_a();
+	srand(time(NULL));
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	if (!glfwInit())
+		ft_error(true, "Error when loading GLFW\n");
+	g_a->window = glfwCreateWindow(SC_WIDTH, SC_HEIGHT, "scop", NULL, NULL);
+	if (!g_a->window)
+		ft_error(true, "Error when loading GLFW\n");
+	glfwMakeContextCurrent(g_a->window);
+	glfwSwapInterval(1);
+	glEnable(GL_DEPTH_TEST);
+	glShadeModel(GL_SMOOTH);
+	init_1();
+}
 
+static void free_g_a_element_1(t_obj_group *group, t_obj_face *tmp_face[2],
+	t_obj_verticle_lst *tmp_verticle[2], t_obj_texture_lst *tmp_texture[2])
+{
 	tmp_face[0] = group->faces;
 	while(tmp_face[0])
 	{
@@ -257,6 +250,16 @@ static void free_g_a2(t_obj_group *group)
 		tmp_face[0] = tmp_face[0]->next;
 		free(tmp_face[1]);
 	}
+}
+
+static void free_g_a_element(t_obj_group *group)
+{
+	t_obj_face			*tmp_face[2];
+	t_obj_verticle_lst	*tmp_verticle[2];
+	t_obj_texture_lst	*tmp_texture[2];
+	t_bmp_texture_lst	*tmp_bmp_texture[2];
+
+	free_g_a_element_1(group, tmp_face, tmp_verticle, tmp_texture);
 	tmp_verticle[0] = group->verticles;
 	while (tmp_verticle[0])
 	{
@@ -286,13 +289,15 @@ static void	free_g_a(void)
 	t_obj_obj			*tmp_obj[2];
 	t_obj_group			*tmp_group[2];
 
+	if (g_a == NULL)
+		return ;
 	tmp_obj[0] = g_a->object.objects;
 	while (tmp_obj[0])
 	{
 		tmp_group[0] = tmp_obj[0]->groups;
 		while (tmp_group[0])
 		{
-			free_g_a2(tmp_group[0]);
+			free_g_a_element(tmp_group[0]);
 			tmp_group[1] = tmp_group[0];
 			tmp_group[0] = tmp_group[0]->next;
 			free(tmp_group[1]->name);
@@ -308,6 +313,8 @@ static void	free_g_a(void)
 
 void		quit(void)
 {
+	if (g_a == NULL)
+		return ;
 	glfwDestroyWindow(g_a->window);
 	glfwTerminate();
 	free_g_a();

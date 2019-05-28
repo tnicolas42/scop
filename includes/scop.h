@@ -6,7 +6,7 @@
 /*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 15:03:27 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/28 18:01:27 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,42 +53,55 @@
 # define MIN_GREY_COLOR 45
 # define MAX_GREY_COLOR 200
 
-extern t_a		*g_a;
+# define MATERIAL_AMBIENT_R 0.5
+# define MATERIAL_AMBIENT_G 0.5
+# define MATERIAL_AMBIENT_B 0.5
+# define MATERIAL_DIFFUSE_R 0.3
+# define MATERIAL_DIFFUSE_G 0.3
+# define MATERIAL_DIFFUSE_B 0.3
+# define MATERIAL_SPECULAR_R 0.08
+# define MATERIAL_SPECULAR_G 0.08
+# define MATERIAL_SPECULAR_B 0.08
+# define MATERIAL_SHININESS 1
 
-void        	init_shader(void);
+extern t_a			*g_a;
 
-void			reset_transform(t_transform *transform);
-void			set_camera_pos(void);
-void			init(void);
-void			quit(void);
+void        		init_shader(void);
 
-int				obj_not_implemented(t_obj obj_info, char **args, int line_nb);
-int				obj_comment(t_obj obj_info, char **args, int line_nb);
-int				obj_verticle(t_obj obj_info, char **args, int line_nb);
-int				obj_texture(t_obj obj_info, char **args, int line_nb);
-int				obj_normal(t_obj obj_info, char **args, int line_nb);
-int				obj_faces(t_obj obj_info, char **args, int line_nb);
-void			parse(char *filename);
+void				reset_transform(t_transform *transform);
+void				set_camera_pos(void);
+void				init(void);
+void				quit(void);
 
-void			error_callback(int error, const char *description);
-void			cursor_position_callback(GLFWwindow *window, double xpos,
-					double ypos);
-void			mouse_button_callback(GLFWwindow *window, int button,
-					int action, int mods);
-void			scroll_callback(GLFWwindow *window, double xoffset,
-					double yoffset);
-void			key_callback(GLFWwindow *window, int key, int scancode,
-					int action);
+int					obj_not_implemented(t_obj obj_info, char **args,
+						int line_nb);
+int					obj_comment(t_obj obj_info, char **args, int line_nb);
+int					obj_verticle(t_obj obj_info, char **args, int line_nb);
+int					obj_texture(t_obj obj_info, char **args, int line_nb);
+int					obj_normal(t_obj obj_info, char **args, int line_nb);
+int					obj_faces(t_obj obj_info, char **args, int line_nb);
+void				parse(char *filename);
 
-void			loop(void);
-void			move_object(double delta_x, double delta_y);
-void			zoom_object(double offset);
-void			transform(void);
-void			set_camera(float ratio);
-void			draw(void);
+void				error_callback(int error, const char *description);
+void				cursor_position_callback(GLFWwindow *window, double xpos,
+						double ypos);
+void				mouse_button_callback(GLFWwindow *window, int button,
+						int action, int mods);
+void				scroll_callback(GLFWwindow *window, double xoffset,
+						double yoffset);
+void				key_callback(GLFWwindow *window, int key, int scancode,
+						int action);
+
+void				loop(void);
+void				move_object(double delta_x, double delta_y);
+void				zoom_object(double offset);
+void				transform(void);
+void				set_camera(float ratio);
+void				draw(void);
 
 t_obj_verticle_lst	*get_verticle_by_id(int id);
 t_obj_texture_lst	*get_texture_by_id(int id);
 t_obj_normal_lst	*get_normal_by_id(int id);
+int					ft_error(bool exit_, char *msg, ...);
 
 #endif
