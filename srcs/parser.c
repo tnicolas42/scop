@@ -6,7 +6,7 @@
 /*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:47:35 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 17:56:54 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/28 18:56:50 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,22 @@ static void	parse_line(char *line, int line_nb)
 {
 	char	**words;
 	int		i;
-	i = 0;
-	while (line[i])
-	{
+
+	i = -1;
+	while (line[++i])
 		line[i] = (line[1] == '\t') ? ' ' : line[i];
-		i++;
-	}
 	if (!(words = ft_strsplit(line, ' ')))
 		ft_error(true, NULL);
 	if (words[0] == 0)
 		return ;
-	i = 0;
-	while (i < NB_TYPE_OBJ_FILE)
-	{
+	i = -1;
+	while (++i < NB_TYPE_OBJ_FILE)
 		if (ft_strcmp(words[0], g_obj[i].name) == 0)
 		{
 			if (g_obj[i].func(g_obj[i], words, line_nb) == ERROR)
 				ft_error(true, NULL);
 			break ;
 		}
-		i++;
-	}
 	if (words[0][0] != '#' && i >= NB_TYPE_OBJ_FILE)
 	{
 		ft_printf("invalid command %s (line %d): '%s'\n", words[0], line_nb, line);
@@ -61,33 +56,58 @@ static void	parse_line(char *line, int line_nb)
 	ft_free_tab(1, words);
 }
 
-static void	set_sizes()
+static void set_sizes_1(t_obj_verticle_lst *tmp)
+{
+	if (tmp == NULL)
+		return ;
+	while (tmp)
+	{
+		g_a->object.description.min.x = (tmp->v.position.x <
+			g_a->object.description.min.x) ? tmp->v.position.x :
+			g_a->object.description.min.x;
+		g_a->object.description.max.x = (tmp->v.position.x >
+			g_a->object.description.max.x) ? tmp->v.position.x :
+			g_a->object.description.max.x;
+		g_a->object.description.min.y = (tmp->v.position.y <
+			g_a->object.description.min.y) ? tmp->v.position.y :
+			g_a->object.description.min.y;
+		g_a->object.description.max.y = (tmp->v.position.y >
+			g_a->object.description.max.y) ? tmp->v.position.y :
+			g_a->object.description.max.y;
+		g_a->object.description.min.z = (tmp->v.position.z <
+			g_a->object.description.min.z) ? tmp->v.position.z :
+			g_a->object.description.min.z;
+		g_a->object.description.max.z = (tmp->v.position.z >
+			g_a->object.description.max.z) ? tmp->v.position.z :
+			g_a->object.description.max.z;
+		tmp = tmp->next;
+	}
+}
+
+static void	set_sizes(void)
 {
 	t_obj_verticle_lst	*tmp;
 	double				max_size;
 
 	tmp = g_a->object.objects->groups->verticles;
-	if (tmp == NULL)
-		return ;
-	while (tmp)
-	{
-		g_a->object.description.min.x = (tmp->v.position.x < g_a->object.description.min.x) ? tmp->v.position.x : g_a->object.description.min.x;
-		g_a->object.description.max.x = (tmp->v.position.x > g_a->object.description.max.x) ? tmp->v.position.x : g_a->object.description.max.x;
-		g_a->object.description.min.y = (tmp->v.position.y < g_a->object.description.min.y) ? tmp->v.position.y : g_a->object.description.min.y;
-		g_a->object.description.max.y = (tmp->v.position.y > g_a->object.description.max.y) ? tmp->v.position.y : g_a->object.description.max.y;
-		g_a->object.description.min.z = (tmp->v.position.z < g_a->object.description.min.z) ? tmp->v.position.z : g_a->object.description.min.z;
-		g_a->object.description.max.z = (tmp->v.position.z > g_a->object.description.max.z) ? tmp->v.position.z : g_a->object.description.max.z;
-		tmp = tmp->next;
-	}
-	g_a->object.description.size.x = g_a->object.description.max.x - g_a->object.description.min.x;
-	g_a->object.description.size.y = g_a->object.description.max.y - g_a->object.description.min.y;
-	g_a->object.description.size.z = g_a->object.description.max.z - g_a->object.description.min.z;
-	g_a->object.description.center.x = (g_a->object.description.max.x + g_a->object.description.min.x) / 2;
-	g_a->object.description.center.y = (g_a->object.description.max.y + g_a->object.description.min.y) / 2;
-	g_a->object.description.center.z = (g_a->object.description.max.z + g_a->object.description.min.z) / 2;
+	set_sizes_1(tmp);
+	g_a->object.description.size.x = g_a->object.description.max.x -
+		g_a->object.description.min.x;
+	g_a->object.description.size.y = g_a->object.description.max.y -
+		g_a->object.description.min.y;
+	g_a->object.description.size.z = g_a->object.description.max.z -
+		g_a->object.description.min.z;
+	g_a->object.description.center.x = (g_a->object.description.max.x +
+		g_a->object.description.min.x) / 2;
+	g_a->object.description.center.y = (g_a->object.description.max.y +
+		g_a->object.description.min.y) / 2;
+	g_a->object.description.center.z = (g_a->object.description.max.z +
+		g_a->object.description.min.z) / 2;
 	max_size = g_a->object.description.size.x;
-	max_size = (g_a->object.description.size.y > max_size) ? g_a->object.description.size.y : max_size;
-	max_size = (g_a->object.description.size.z > max_size) ? g_a->object.description.size.z : max_size;
+	max_size = (g_a->object.description.size.y > max_size) ?
+		g_a->object.description.size.y : max_size;
+	max_size = (g_a->object.description.size.z > max_size) ?
+		g_a->object.description.size.z : max_size;
 	if (max_size == 0)
 		max_size = 1;
 	g_a->object.description.max_size = max_size;

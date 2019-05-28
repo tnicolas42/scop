@@ -6,7 +6,7 @@
 /*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 15:50:25 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 17:59:23 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/28 19:01:51 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,23 @@ int					ft_error(bool exit_, char *format, ...)
 	va_list	ap;
 	char	*str;
 	int		ret;
+	bool	err;
 
+	err = false;
 	if (format == NULL)
-	{
-		if (exit_)
-			exit(EXIT_FAILURE);
-		return (ERROR);
-	}
+		err = true;
 	str = NULL;
 	va_start(ap, format);
-	if ((ret = ft_vasprintf(&str, format, ap)) == ERROR)
+	if (!err && (ret = ft_vasprintf(&str, format, ap)) == ERROR)
 	{
 		va_end(ap);
-		if (exit_)
-			exit(EXIT_FAILURE);
-		return (ERROR);
+		err = true;
 	}
-	va_end(ap);
+	if (!err)
+		va_end(ap);
 	if (str != NULL)
 		if (write(STDERR_FILENO, str, ret) == -1 && ft_free(1, str))
-		{
-			if (exit_)
-				exit(EXIT_FAILURE);
-			return (ERROR);
-		}
+			err = true;
 	free(str);
 	if (exit_)
 		exit(EXIT_FAILURE);
