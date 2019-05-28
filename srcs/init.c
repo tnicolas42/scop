@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 18:35:14 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/28 14:44:44 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static void	init_object(void)
 	g_a->object.objects->groups->textures_bmp = NULL;
 	g_a->object.objects->groups->used_texture_bmp = NULL;
 	g_a->object.objects->groups->faces = NULL;
+	g_a->object.objects->groups->transition_state = T_UP;
+	g_a->object.objects->groups->transition_val = 0;
 
 	g_a->object.material.ambient.x = 0.5;
 	g_a->object.material.ambient.y = 0.5;

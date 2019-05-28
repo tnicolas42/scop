@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop_struct.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/27 18:23:25 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/28 14:50:54 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,11 @@ typedef struct		s_obj_face
 **	chained list with all groups (g ...)
 */
 
+enum				e_transition
+{
+	T_OFF, T_DOWN, T_UP
+};
+
 typedef struct		s_obj_group
 {
 	char				*name;
@@ -205,6 +210,8 @@ typedef struct		s_obj_group
 	t_obj_normal_lst	*normales;
 	t_bmp_texture_lst	*textures_bmp;
 	t_bmp_texture_lst	*used_texture_bmp;
+	enum e_transition	transition_state;
+	int					transition_val;
 	t_obj_face			*faces;
 	struct s_obj_group	*next;
 }					t_obj_group;

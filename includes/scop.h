@@ -6,7 +6,7 @@
 /*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 14:11:00 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/28 15:03:27 by tim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@
 # define AUTO_MOVING_SPEED 0.6
 # define ZOOM_MIN 0.1
 # define ZOOM_MAX 15
+# define TRANSITION_DOWN_SPEED 8
+# define TRANSITION_UP_SPEED 3
 
-# define CAMERA_POS_Y 1
-# define CAMERA_NEAR 0.3
+# define CAMERA_POS_Y 1.5
+# define CAMERA_NEAR 0.5
 # define CAMERA_FAR 50
 
 # define SUCCESS 1
