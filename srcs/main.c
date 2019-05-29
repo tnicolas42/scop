@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:23:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/29 13:27:44 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/29 14:16:31 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,30 @@
 
 t_a		*g_a = NULL;
 
+void	ft_usage(void)
+{
+	ft_printf("Usage: ./scop <file.obj>\n"
+		"Keyboard shortcuts:\n"
+		"\t<up> | <down> | <left> | <right> to move piece in screen\n"
+		"\t<w> | <a> | <s> | <d> to move piece in screen\n"
+		"\t[Shift] + <xyz> to move piece in axis\n"
+		"\t<ctrl> + [Shift] + <xyz> to rotate piece in axis\n"
+		"\t<t> to change texture\n"
+		"\t<m> to enable or disable auto rotate\n"
+		"\t<r> to reset position\n"
+		"Mouse control\n"
+		"\t<leftClick> to move object\n"
+		"\t<ctrl> + leftClick> | <rightClick> to rotate object\n"
+		"\t<scrollUp> | <scrollDown> to zoom on object\n");
+}
+
 int		main(int ac, char **av)
 {
 	if (ac < 2)
-		ft_error(true, "Usage: ./scop <file.obj>\n");
+	{
+		ft_usage();
+		return (EXIT_SUCCESS);
+	}
 	init();
 	parse(av[1]);
 	loop();
