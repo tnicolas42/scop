@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:23:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/29 14:16:31 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/29 15:25:19 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_usage(void)
 		"Keyboard shortcuts:\n"
 		"\t<up> | <down> | <left> | <right> to move piece in screen\n"
 		"\t<w> | <a> | <s> | <d> to move piece in screen\n"
+		"\t<+> | <-> to zoom / dezoom\n"
 		"\t[Shift] + <xyz> to move piece in axis\n"
 		"\t<ctrl> + [Shift] + <xyz> to rotate piece in axis\n"
 		"\t<t> to change texture\n"

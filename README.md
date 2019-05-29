@@ -21,6 +21,7 @@ Usage: ./scop <file.obj>
 Keyboard shortcuts:
 	<up> | <down> | <left> | <right> to move piece in screen
 	<w> | <a> | <s> | <d> to move piece in screen
+	<+> | <-> to zoom / dezoom
 	[Shift] + <xyz> to move piece in axis
 	<ctrl> + [Shift] + <xyz> to rotate piece in axis
 	<t> to change texture
