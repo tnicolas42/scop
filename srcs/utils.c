@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 15:50:25 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 19:01:51 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/29 12:14:56 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_obj_verticle_lst	*get_verticle_by_id(int id)
 		return (NULL);
 	while (verticle_tmp->v.id > id)
 		verticle_tmp = verticle_tmp->next;
-	return verticle_tmp;
+	return (verticle_tmp);
 }
 
 t_obj_texture_lst	*get_texture_by_id(int id)
@@ -35,7 +35,7 @@ t_obj_texture_lst	*get_texture_by_id(int id)
 		return (NULL);
 	while (texture_tmp->t.id > id)
 		texture_tmp = texture_tmp->next;
-	return texture_tmp;
+	return (texture_tmp);
 }
 
 t_obj_normal_lst	*get_normal_by_id(int id)
@@ -48,7 +48,7 @@ t_obj_normal_lst	*get_normal_by_id(int id)
 		return (NULL);
 	while (tmp->vn.id > id)
 		tmp = tmp->next;
-	return tmp;
+	return (tmp);
 }
 
 int					ft_error(bool exit_, char *format, ...)

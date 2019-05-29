@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:47:35 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 18:56:50 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/29 12:06:11 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ static void	parse_line(char *line, int line_nb)
 		}
 	if (words[0][0] != '#' && i >= NB_TYPE_OBJ_FILE)
 	{
-		ft_printf("invalid command %s (line %d): '%s'\n", words[0], line_nb, line);
+		ft_printf("invalid command %s (L %d): '%s'\n", words[0], line_nb, line);
 		ft_free_tab(1, words);
 		ft_error(true, NULL);
 	}
 	ft_free_tab(1, words);
 }
 
-static void set_sizes_1(t_obj_verticle_lst *tmp)
+static void	set_sizes_1(t_obj_verticle_lst *tmp)
 {
 	if (tmp == NULL)
 		return ;
