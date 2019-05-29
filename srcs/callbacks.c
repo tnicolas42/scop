@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   callbacks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:34:44 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 17:22:05 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/29 11:55:42 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scop.h>
 
-void	error_callback(int error, const char *description)
+void		error_callback(int error, const char *description)
 {
 	(void)error;
 	ft_error(true, "Error: %s\n", description);
 }
 
-void	cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
+void		cursor_position_callback(GLFWwindow *window, double xpos,
+	double ypos)
 {
 	double	delta_x;
 	double	delta_y;
@@ -39,7 +40,7 @@ void	cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
 	move_object(delta_x, delta_y);
 }
 
-void	mouse_button_callback(GLFWwindow *window, int button, int action,
+void		mouse_button_callback(GLFWwindow *window, int button, int action,
 			int mods)
 {
 	(void)window;
@@ -54,18 +55,15 @@ void	mouse_button_callback(GLFWwindow *window, int button, int action,
 		g_a->key_mouse.is_mouse_right_pressed = false;
 }
 
-void	scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
+void		scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
 {
 	(void)window;
 	(void)xoffset;
 	zoom_object(yoffset * ZOOM_SPEED_MOUSE);
 }
 
-static void key_callback_1(int key, int action)
+static void	key_callback_1(int key, int action, int revert)
 {
-	int		revert;
-
-	revert = (g_a->key_mouse.is_shift_pressed) ? -1 : 1;
 	if (key == GLFW_KEY_X && (action == GLFW_PRESS || action == GLFW_REPEAT))
 	{
 		if (g_a->key_mouse.is_ctrl_pressed)
@@ -92,7 +90,7 @@ static void key_callback_1(int key, int action)
 	}
 }
 
-static void key_callback_2(int key, int action)
+static void	key_callback_2(int key, int action)
 {
 	if ((key == GLFW_KEY_UP || key == GLFW_KEY_W) &&
 	(action == GLFW_PRESS || action == GLFW_REPEAT))
@@ -116,7 +114,7 @@ static void key_callback_2(int key, int action)
 		g_a->is_auto_moving = !g_a->is_auto_moving;
 }
 
-static void key_callback_3(int key, int action)
+static void	key_callback_3(int key, int action)
 {
 	if ((key == GLFW_KEY_LEFT_CONTROL && action == GLFW_PRESS) ||
 			(key == GLFW_KEY_RIGHT_CONTROL && action == GLFW_PRESS))
@@ -144,11 +142,13 @@ static void key_callback_3(int key, int action)
 		zoom_object(ZOOM_SPEED_KEYBOARD);
 }
 
-void	key_callback(GLFWwindow *window, int key, int scancode, int action)
+void		key_callback(GLFWwindow *window, int key, int scancode, int action)
 {
+	int		revert;
 
 	(void)scancode;
-	key_callback_1(key, action);
+	revert = (g_a->key_mouse.is_shift_pressed) ? -1 : 1;
+	key_callback_1(key, action, revert);
 	key_callback_2(key, action);
 	key_callback_3(key, action);
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)

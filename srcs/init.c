@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:20:16 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 18:22:07 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/29 12:04:05 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		set_camera_pos(void)
 	g_a->cam.far = g_a->object.description.max_size * CAMERA_FAR;
 }
 
-static void init_object_1(void)
+static void	init_object_1(void)
 {
 	g_a->object.objects->name = NULL;
 	g_a->object.objects->next = NULL;
@@ -143,7 +143,8 @@ static void	create_bmp_img(t_bmp_texture_lst *texture, char *buffer, int i)
 		{
 			k = -1;
 			while (++k < texture->t.opp)
-				texture->t.img[l + j + k] = (unsigned char)buffer[i + j + (texture->t.opp - k - 1)];
+				texture->t.img[l + j + k] = (unsigned char)buffer[i + j +
+					(texture->t.opp - k - 1)];
 		}
 		l += texture->t.sl;
 	}
@@ -157,10 +158,11 @@ static void	create_gl_texture(t_bmp_texture_lst *texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->t.w, texture->t.h, 0, GL_RGB, GL_UNSIGNED_BYTE, texture->t.img);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->t.w, texture->t.h, 0,
+		GL_RGB, GL_UNSIGNED_BYTE, texture->t.img);
 }
 
-void	load_bmp(char *filename, bool default_tex)
+void		load_bmp(char *filename, bool default_tex)
 {
 	t_bmp_texture_lst	*texture;
 	int					fd;
@@ -186,7 +188,7 @@ void	load_bmp(char *filename, bool default_tex)
 		g_a->object.objects->groups->used_texture_bmp = texture;
 }
 
-static void init_1(void)
+static void	init_1(void)
 {
 	glfwSetErrorCallback(error_callback);
 	glfwSetKeyCallback(g_a->window, (void(*)(GLFWwindow *, int, int, int, int))
@@ -226,11 +228,11 @@ void		init(void)
 	init_1();
 }
 
-static void free_g_a_element_1(t_obj_group *group, t_obj_face *tmp_face[2],
+static void	free_g_a_element_1(t_obj_group *group, t_obj_face *tmp_face[2],
 	t_obj_verticle_lst *tmp_verticle[2], t_obj_texture_lst *tmp_texture[2])
 {
 	tmp_face[0] = group->faces;
-	while(tmp_face[0])
+	while (tmp_face[0])
 	{
 		tmp_verticle[0] = tmp_face[0]->verticles;
 		while (tmp_verticle[0])
@@ -252,14 +254,10 @@ static void free_g_a_element_1(t_obj_group *group, t_obj_face *tmp_face[2],
 	}
 }
 
-static void free_g_a_element(t_obj_group *group)
+static void	free_g_a_element_2(t_obj_group *group,
+	t_obj_verticle_lst *tmp_verticle[2], t_obj_texture_lst *tmp_texture[2],
+	t_bmp_texture_lst *tmp_bmp_texture[2])
 {
-	t_obj_face			*tmp_face[2];
-	t_obj_verticle_lst	*tmp_verticle[2];
-	t_obj_texture_lst	*tmp_texture[2];
-	t_bmp_texture_lst	*tmp_bmp_texture[2];
-
-	free_g_a_element_1(group, tmp_face, tmp_verticle, tmp_texture);
 	tmp_verticle[0] = group->verticles;
 	while (tmp_verticle[0])
 	{
@@ -282,6 +280,17 @@ static void free_g_a_element(t_obj_group *group)
 		free(tmp_bmp_texture[1]->t.img);
 		free(tmp_bmp_texture[1]);
 	}
+}
+
+static void	free_g_a_element(t_obj_group *group)
+{
+	t_obj_face			*tmp_face[2];
+	t_obj_verticle_lst	*tmp_verticle[2];
+	t_obj_texture_lst	*tmp_texture[2];
+	t_bmp_texture_lst	*tmp_bmp_texture[2];
+
+	free_g_a_element_1(group, tmp_face, tmp_verticle, tmp_texture);
+	free_g_a_element_2(group, tmp_verticle, tmp_texture, tmp_bmp_texture);
 }
 
 static void	free_g_a(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:19:42 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 18:09:21 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/29 11:56:54 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	set_color(t_obj_group *group)
 	}
 }
 
-static void draw_faces_1(t_obj_group *group, t_obj_face *tmp, t_vector3 center)
+static void	draw_faces_1(t_obj_group *group, t_obj_face *tmp, t_vector3 center)
 {
 	t_obj_verticle_lst	*verticle_tmp;
 	t_obj_texture_lst	*texture_tmp;
@@ -102,7 +102,8 @@ static void	draw_faces(t_obj_group *group)
 	while (tmp)
 	{
 		glBegin(GL_POLYGON);
-		glColor3ub(group->transition_val, group->transition_val, group->transition_val);
+		glColor3ub(group->transition_val, group->transition_val,
+			group->transition_val);
 		draw_faces_1(group, tmp, center);
 		glEnd();
 		tmp = tmp->next;
