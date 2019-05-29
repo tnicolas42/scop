@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tim <tim@student.42.fr>                    +#+  +:+       +#+         #
+#    By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/08 10:53:49 by tnicolas          #+#    #+#              #
-#    Updated: 2019/05/28 13:46:52 by tim              ###   ########.fr        #
+#    Updated: 2019/05/29 14:04:19 by tnicolas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,17 @@ ARGS = obj_files/42.obj
 FILES = main.c \
 		parser.c \
 		init.c \
-		callbacks.c \
+		init_a.c \
+		bmp_parser.c \
+		quit.c \
+		callbacks1.c \
+		callbacks2.c \
 		transform.c \
 		draw.c \
 		loop.c \
 		parse_type1.c \
+		parse_type2.c \
+		parse_type3.c \
 		utils.c \
 		shader.c
 

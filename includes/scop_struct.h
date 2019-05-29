@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop_struct.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:26:40 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 14:50:54 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/29 13:26:28 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ typedef struct		s_obj_normal
 
 typedef struct		s_obj_normal_lst
 {
-	t_obj_normal				vn;
+	t_obj_normal			vn;
 	struct s_obj_normal_lst	*next;
 }					t_obj_normal_lst;
 
@@ -227,11 +227,12 @@ typedef struct		s_obj_obj
 	struct s_obj_obj	*next;
 }					t_obj_obj;
 
-typedef struct		s_material {
+typedef struct		s_material
+{
 	t_vector3		ambient;
 	t_vector3		diffuse;
 	t_vector3		specular;
-    float			shininess;
+	float			shininess;
 }					t_material;
 
 /*

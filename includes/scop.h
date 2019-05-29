@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scop.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tim <tim@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 15:14:13 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/28 18:01:27 by tim              ###   ########.fr       */
+/*   Updated: 2019/05/29 14:03:30 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,12 @@
 
 extern t_a			*g_a;
 
-void        		init_shader(void);
+void				init_shader(void);
 
 void				reset_transform(t_transform *transform);
 void				set_camera_pos(void);
+void				load_bmp(char *filename, bool default_tex);
+void				init_a(void);
 void				init(void);
 void				quit(void);
 
