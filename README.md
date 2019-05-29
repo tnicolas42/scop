@@ -39,10 +39,12 @@ Example
 
 ## Textures
 To change textures: `T`
+
 ![](gif/textures.gif)
 
 ## Moving
 To move you can use arrows, wasd, left click or xzy.
 To rotate you can use ctrl + xzy, right click or ctrl + left click.
 To zoom/dezoom you can use +- or you can scroll.
+
 ![](gif/moving.gif)
