@@ -6,7 +6,7 @@
 /*   By: tnicolas <tnicolas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:47:35 by tnicolas          #+#    #+#             */
-/*   Updated: 2019/05/29 12:06:11 by tnicolas         ###   ########.fr       */
+/*   Updated: 2019/05/29 14:46:38 by tnicolas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ void		parse(char *filename)
 {
 	int		fd;
 
+	if (ft_strcmp(filename, "/dev/zero") == 0)
+		ft_error(true, "invalid file format\n");
 	if ((fd = open(filename, 'r')) < 0)
 		ft_error(true, "invalid filename %s\n", filename);
 	parse_file(fd);
